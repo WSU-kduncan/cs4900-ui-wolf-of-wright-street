@@ -1,2 +1,7 @@
-# CS4900 UI Repository
-Group: Wolf of Wright Street
+# Wolf of Wright Street - UI Group Repository
+This is the UI repository for the Transaction Tracker project.
+### Group Members
+- Kyle Cox
+- Daniel Cronauer
+- Samuel Kondall
+- Cyrus Straley
