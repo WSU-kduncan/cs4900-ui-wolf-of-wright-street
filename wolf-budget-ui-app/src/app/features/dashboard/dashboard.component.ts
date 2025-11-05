@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
-  standalone: true,       // Only if using Angular 15+ standalone components
+  standalone: true,       
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

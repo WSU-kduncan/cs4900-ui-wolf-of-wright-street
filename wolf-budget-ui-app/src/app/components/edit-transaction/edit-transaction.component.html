@@ -1,0 +1,14 @@
+<h2>Transaction List</h2>
+
+@if (transactions) {
+  <ul>
+    @for (transaction of transactions; track transaction.id) {
+      <li class="transaction-item">{{ transaction.transactionName }}</li>
+
+    }
+      @empty {
+        <li>No transactions found.</li>
+      }
+    
+  </ul>
+} 
