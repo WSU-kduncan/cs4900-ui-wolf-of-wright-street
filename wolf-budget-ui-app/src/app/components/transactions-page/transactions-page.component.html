@@ -1,0 +1,10 @@
+<h2>Your Transactions:</h2>
+<p>
+@if(transactions) {
+    @for(transaction of transactions; track transaction.id) {
+        <li class= "transaction">{{ transaction.id }} | {{ transaction.name }}</li>
+    } @empty {
+        <p>There are no transactions to display.</p>
+    }
+}
+</p>
