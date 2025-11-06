@@ -1,1 +1,31 @@
-<p>budget-chart works!</p>
+<section class="budget">
+  @if (categories().length > 0) {
+    <h2>Budget Allocation</h2>
+    <p class="summary">
+      Budget: ${{ budget() }} · Used: ${{ used() }}
+      @if (over() > 0) { <span class="over">Over by ${{ over() }}</span> }
+      @if (remaining() > 0) { <span class="ok">Remaining ${{ remaining() }}</span> }
+    </p>
+  }
+
+  <div class="chart">
+    <canvas
+      baseChart
+      [data]="pieConfig().data"
+      [type]="pieConfig().type"
+      [options]="pieConfig().options">
+    </canvas>
+  </div>
+
+  <ul class="items">
+    @for (c of categories(); track c.id) {
+      <li class="item">
+        <span class="name">{{ c.name }}</span>
+        <span class="amt">${{ c.amount }}</span>
+        <span class="pct">{{ percentOfBudget(c) }}%</span>
+      </li>
+    } @empty {
+      <li class="item muted">No categories yet.</li>
+    }
+  </ul>
+</section>
