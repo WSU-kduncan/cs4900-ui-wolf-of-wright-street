@@ -1,15 +1,11 @@
+// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
+import { BudgetChartComponent } from './features/budget-chart/budget-chart.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EditTransactionComponent],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  imports: [BudgetChartComponent],
+  template: `<app-budget-chart />`,
 })
-export class AppComponent {
-  title = 'wolf-budget-ui-app';
-}
-
+export class AppComponent {}
