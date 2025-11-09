@@ -1,10 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { TransactionService } from '../../services/transaction.service';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule} from '@angular/forms'; 
+import { TransactionDetailComponent } from '../transaction-detail/transaction-detail.component';
+
+interface Transaction {
+  id: number;
+  transactionName: string;
+}
+
+
 
 @Component({
   selector: 'app-edit-transaction',
-  imports: [FormsModule],
+  imports: [FormsModule, TransactionDetailComponent],
   templateUrl: './edit-transaction.component.html',
   styleUrl: './edit-transaction.component.scss',
   standalone: true,
@@ -21,6 +29,9 @@ export class EditTransactionComponent {
   //store name from inputBox into signal to grab value later
   newTransactionSignal = signal('');
 
+  // keep track current transaction in signal array as we iterate
+  currentTransaction: WritableSignal <Transaction | null> = signal(null);
+
   // runs when called, in our case add transaction clicked
   createTransaction() {
     //get new name from signal
@@ -28,7 +39,7 @@ export class EditTransactionComponent {
     
     if(!nameField) return; // exit, nothing to add if null
     
-    const newTransactionObject = {
+    const newTransactionObject: Transaction = {
       // unique number based on timestamp
       id: Date.now(),
       //name to take on value form newTransactionSignal

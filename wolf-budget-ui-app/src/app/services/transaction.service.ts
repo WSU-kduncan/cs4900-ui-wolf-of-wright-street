@@ -1,5 +1,11 @@
 import { signal, Injectable } from '@angular/core';
 
+interface Transaction {
+  id: number;
+  transactionName: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +17,8 @@ export class TransactionService {
     { id: 4, transactionName: 'Transaction Four' }
   ]);
 
-  createTransaction(newTransaction: { id: number; transactionName: string }) {
-    this.transactions.update(list => [...list, newTransaction]);
+  createTransaction(newTransaction: Transaction) {
+    this.transactions.set([...this.transactions(), newTransaction]);
   }
 
   constructor() { }

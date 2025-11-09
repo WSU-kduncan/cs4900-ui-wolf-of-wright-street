@@ -3,8 +3,11 @@
 @if (transactionSignal()) {
   <ul>
     @for (transaction of transactionSignal(); track transaction.id) {
-      <li class="transaction-item">{{ transaction.transactionName }}</li>
-
+      <li class="transaction-item">
+        <!-- removed from this for loop to bottom{{ transaction.transactionName }} -->
+        <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
+      </li>
+      <button>Edit</button>
     }
       @empty {
         <li>No transactions found.</li>
@@ -12,7 +15,6 @@
     
   </ul>
   <!-- Doing add for now since HW called for Add, but will switch to edit later -->
-  <input type="text"   [value]="newTransactionSignal()"
-  (input)="newTransactionSignal.set($any($event.target).value)" placeholder="New Transaction Name" >
+  <input type="text" [(ngModel)]="newTransactionSignal" placeholder="New Transaction Name" >
   <button (click)="createTransaction()">Add Transaction</button>
 } 
