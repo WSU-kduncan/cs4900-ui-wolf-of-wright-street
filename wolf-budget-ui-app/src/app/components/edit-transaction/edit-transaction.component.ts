@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-edit-transaction',
@@ -10,14 +11,15 @@ import { Component } from '@angular/core';
 export class EditTransactionComponent {
   title = "Edit Transaction"
 
-  // transactions: { id: number; transactionName: string}[] = [];
+  // place transaction service inside this component
+  tService = inject(TransactionService);
+
+  //want signal from service from signal componet to interact with
+  transactionSignal = this.tService.transactions;
+
   
-  transactions = [
-    { id: 1, transactionName: 'Transaction One' },
-    { id: 2, transactionName: 'Transaction Two' },
-    { id: 3, transactionName: 'Transaction Three' },
-    { id: 4, transactionName: 'Transaction Four' }
-  ]; 
+
+  
 
  
 }
