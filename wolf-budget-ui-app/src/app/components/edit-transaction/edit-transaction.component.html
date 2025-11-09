@@ -6,8 +6,9 @@
       <li class="transaction-item">
         <!-- removed from this for loop to bottom{{ transaction.transactionName }} -->
         <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
+        <button>Edit</button>
       </li>
-      <button>Edit</button>
+      
     }
       @empty {
         <li>No transactions found.</li>
