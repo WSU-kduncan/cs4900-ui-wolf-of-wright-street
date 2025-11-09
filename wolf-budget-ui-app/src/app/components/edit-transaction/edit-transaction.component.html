@@ -1,8 +1,8 @@
 <h2>Transaction List</h2>
 
-@if (transactions) {
+@if (transactionSignal()) {
   <ul>
-    @for (transaction of transactions; track transaction.id) {
+    @for (transaction of transactionSignal(); track transaction.id) {
       <li class="transaction-item">{{ transaction.transactionName }}</li>
 
     }
@@ -12,5 +12,7 @@
     
   </ul>
   <!-- Doing add for now since HW called for Add, but will switch to edit later -->
-  <button (click)="addTransaction()">Add Transaction</button>
+  <input type="text"   [value]="newTransactionSignal()"
+  (input)="newTransactionSignal.set($any($event.target).value)" placeholder="New Transaction Name" >
+  <button (click)="createTransaction()">Add Transaction</button>
 } 

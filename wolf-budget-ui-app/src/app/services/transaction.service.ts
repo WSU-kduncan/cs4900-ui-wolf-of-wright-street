@@ -11,5 +11,9 @@ export class TransactionService {
     { id: 4, transactionName: 'Transaction Four' }
   ]);
 
+  createTransaction(newTransaction: { id: number; transactionName: string }) {
+    this.transactions.update(list => [...list, newTransaction]);
+  }
+
   constructor() { }
 }

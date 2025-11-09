@@ -1,4 +1,4 @@
-
+@use "sass:color"; // had deprecation error, had to import this to fix
 $border-color: #ccc;
 $hover-color: #e6f7ff;
 $item-bg: #f9f9f9;
@@ -31,7 +31,7 @@ ul {
 
     
     &:nth-child(even) {
-      background-color: lighten($item-bg, 10%);
+      background-color: color.scale($item-bg, $lightness: 10%);
     }
   }
 }
