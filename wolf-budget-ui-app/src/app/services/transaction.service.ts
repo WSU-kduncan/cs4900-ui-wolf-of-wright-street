@@ -1,9 +1,5 @@
 import { signal, Injectable } from '@angular/core';
-
-interface Transaction {
-  id: number;
-  transactionName: string;
-}
+import { Transaction } from '../models/transaction.model';
 
 
 @Injectable({
