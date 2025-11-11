@@ -1,1 +1,6 @@
-<p>transaction-detail works!</p>
+@if (transaction) {
+    <h3>{{ transaction.id }} | {{ transaction.name }}</h3>
+} @else {
+    <p>There is no transaction.</p>
+}
+

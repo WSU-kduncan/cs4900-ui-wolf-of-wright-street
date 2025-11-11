@@ -2,7 +2,9 @@
 <p>
 @if(transactionSignal()) {
     @for(transaction of transactionSignal(); track transaction.id) {
-        <li class= "transaction">{{ transaction.id }} | {{ transaction.name }}</li>
+        <li class= "transaction">
+            <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
+        </li>
     } @empty {
         <p>There are no transactions to display.</p>
     }
