@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TransactionService } from "@app/services/transaction.service";
 
 @Component({
   selector: 'app-transactions-page',
