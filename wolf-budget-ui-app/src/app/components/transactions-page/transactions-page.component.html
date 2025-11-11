@@ -1,6 +1,6 @@
 <h2>Your Transactions:</h2>
 <p>
-@if(transactions) {
+@if(transactionSignal()) {
     @for(transaction of transactions; track transaction.id) {
         <li class= "transaction">{{ transaction.id }} | {{ transaction.name }}</li>
     } @empty {

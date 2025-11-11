@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { TransactionService } from "@app/services/transaction.service";
+import { Component, inject } from '@angular/core';
+import { TransactionService } from "../../services/transaction.service";
 
 @Component({
   selector: 'app-transactions-page',
@@ -10,12 +10,7 @@ import { TransactionService } from "@app/services/transaction.service";
 export class TransactionsPageComponent {
   title = "Transactions Page"
 
-  transactions =
-  [
-    {id: 1, name: "Grocery shopping"},
-    {id: 2, name: "Amazon purchase"},
-    {id: 3, name: "Loan payment"},
-    {id: 4, name: "Taxes"},
-    {id: 5, name: "Christmas presents"}
-  ]
+  // inject TransactionService, grab transactions
+  transactionService = inject(TransactionService);
+  transactionSignal = this.transactionService.transactions;
 }
