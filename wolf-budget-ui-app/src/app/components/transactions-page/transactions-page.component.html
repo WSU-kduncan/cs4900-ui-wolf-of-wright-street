@@ -1,10 +1,12 @@
 <h2>Your Transactions:</h2>
 <p>
 @if(transactionSignal()) {
-    @for(transaction of transactions; track transaction.id) {
+    @for(transaction of transactionSignal(); track transaction.id) {
         <li class= "transaction">{{ transaction.id }} | {{ transaction.name }}</li>
     } @empty {
         <p>There are no transactions to display.</p>
     }
 }
 </p>
+<input type = "text" [(ngModel)]="newTransactionSignal" placeholder="NAME">
+<button (click)="createTransaction()"> Add Transaction</button>
