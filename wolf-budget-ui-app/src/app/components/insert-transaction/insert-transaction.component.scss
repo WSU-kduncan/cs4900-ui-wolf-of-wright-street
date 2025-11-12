@@ -1,0 +1,20 @@
+$border-color: #FFC857;
+$hover-color: whitesmoke;
+
+h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+ul {
+    .transaction-item {
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        padding: 10px 12px;
+        background-color: azure;
+
+        &:hover {
+        background-color: $hover-color;
+        }
+    }
+}

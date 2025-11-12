@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
+import { InsertTransactionComponent } from './components/insert-transaction/insert-transaction.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EditTransactionComponent],
+  imports: [RouterOutlet, InsertTransactionComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
