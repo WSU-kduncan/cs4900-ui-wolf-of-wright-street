@@ -6,6 +6,8 @@ import { provideHttpClient, withInterceptors, HttpInterceptorFn } from '@angular
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
+import { InsertTransactionService } from './services/insert-transaction.service';
+
 
 export const retryInterceptor: HttpInterceptorFn = (req, next) => {
   // Here you could add retry logic if needed
@@ -24,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     //provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([retryInterceptor, errorInterceptor]))
+    provideHttpClient(withInterceptors([retryInterceptor, errorInterceptor])),
+    InsertTransactionService
   ]
 };

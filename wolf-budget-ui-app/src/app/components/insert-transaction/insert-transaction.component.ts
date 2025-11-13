@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { InsertTransactionService } from '../../services/insert-transaction.service';
+import { Transaction } from '../../models/transaction.model';
 
 @Component({
   selector: 'app-insert-transaction',
@@ -8,12 +10,15 @@ import { Component } from '@angular/core';
 })
 export class InsertTransactionComponent {
 
-  title = "Edit Transaction"
+  title = "Insert Transaction"
+
+  service = inject(InsertTransactionService);
+
+  signal = this.service.transactions;
+
+  newSignal = signal('');
+
+  currentTransaction: WritableSignal <Transaction | null> = signal(null);
+
   
-  transactions = [
-    { id: 1, transactionName: 'Transaction One' },
-    { id: 2, transactionName: 'Transaction Two' },
-    { id: 3, transactionName: 'Transaction Three' },
-    { id: 4, transactionName: 'Transaction Four' }
-  ]; 
 }
