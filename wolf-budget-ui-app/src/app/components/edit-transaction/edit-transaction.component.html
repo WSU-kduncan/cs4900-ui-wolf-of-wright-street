@@ -1,14 +1,21 @@
 <h2>Transaction List</h2>
 
-@if (transactions) {
-  <ul>
-    @for (transaction of transactions; track transaction.id) {
-      <li class="transaction-item">{{ transaction.transactionName }}</li>
+<div class="add-transaction">
+  <input
+    type="text"
+    placeholder="new transaction name"
+    [value]="newName()"
+    (input)="onNameInput(($event.target as HTMLInputElement).value)"
+  />
+  <button type="button" (click)="addTransaction()">Add Item</button>
+</div>
 
-    }
-      @empty {
-        <li>No transactions found.</li>
-      }
-    
-  </ul>
-} 
+<ul>
+  @for (transaction of transactions(); track transaction.id) {
+    <li class="transaction-item">
+      <app-transaction-detail [item]="transaction" />
+    </li>
+  } @empty {
+    <li>No transactions found.</li>
+  }
+</ul>

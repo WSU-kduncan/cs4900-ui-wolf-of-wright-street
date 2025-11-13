@@ -27,3 +27,17 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([retryInterceptor, errorInterceptor]))
   ]
 };
+
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+// other imports...
+import { TransactionService } from './services/transaction.service';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    // whatever else you already have (zone detection, http, etc.)
+    TransactionService, // <-- add this line
+  ],
+};
