@@ -1,9 +1,9 @@
 import { Component, Input, signal } from '@angular/core';
-
-interface Transaction {
-  id: number;
-  transactionName: string;
-}
+import { Transaction } from '../../models/transaction.model';
+// interface Transaction {
+//   id: number;
+//   transactionName: string;
+// }
 
 @Component({
   selector: 'app-transaction-detail',
@@ -15,7 +15,5 @@ interface Transaction {
 export class TransactionDetailComponent {
   @Input({required: true})  transaction: Transaction | null = null;
 
-  
 
-  
 }

@@ -2,11 +2,7 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { TransactionService } from '../../services/transaction.service';
 import { FormsModule} from '@angular/forms'; 
 import { TransactionDetailComponent } from '../transaction-detail/transaction-detail.component';
-
-interface Transaction {
-  id: number;
-  transactionName: string;
-}
+import { Transaction } from '../../models/transaction.model';
 
 
 
