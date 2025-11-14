@@ -8,3 +8,12 @@ button.primary {
   background-color: var(--color-amazon);
   color: white;
 }
+.layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.layout__column {
+  flex: 1;
+}

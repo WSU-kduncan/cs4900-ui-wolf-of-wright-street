@@ -1,0 +1,4 @@
+<div class="transaction-detail" [class.transaction-detail--negative]="transaction().amount < 0">
+  <span class="transaction-detail__name">{{ transaction().name }}</span>
+  <span class="transaction-detail__amount">{{ transaction().amount }}</span>
+</div>

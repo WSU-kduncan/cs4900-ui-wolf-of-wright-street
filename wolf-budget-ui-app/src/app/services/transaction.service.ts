@@ -2,31 +2,35 @@ import { Injectable, signal } from '@angular/core';
 
 export interface Transaction {
   id: number;
-  transactionName: string;
+  name: string;
+  amount: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private nextId = 1;
+  // signal-backed list of transactions
+  private readonly _transactions = signal<Transaction[]>([
+    { id: 1, name: 'Rent', amount: -1200 },
+    { id: 2, name: 'Groceries', amount: -300 },
+    { id: 3, name: 'Paycheck', amount: 2500 },
+  ]);
 
-  // signal holding the array of data
-  private readonly _transactions = signal<Transaction[]>([]);
-
-  // read-only view exposed to components
+  // expose as read-only to components
   readonly transactions = this._transactions.asReadonly();
 
-  // logic for adding a new item
-  add(name: string): void {
-    const trimmed = name.trim();
-    if (!trimmed) {
+  private readonly _nextId = signal(4);
+
+  addTransaction(name: string, amount: number): void {
+    const trimmedName = name.trim();
+    if (!trimmedName || Number.isNaN(amount)) {
       return;
     }
 
-    const tx: Transaction = {
-      id: this.nextId++,
-      transactionName: trimmed,
-    };
-
-    this._transactions.update(list => [...list, tx]);
+    const id = this._nextId();
+    this._transactions.update(list => [
+      ...list,
+      { id, name: trimmedName, amount },
+    ]);
+    this._nextId.update(v => v + 1);
   }
 }

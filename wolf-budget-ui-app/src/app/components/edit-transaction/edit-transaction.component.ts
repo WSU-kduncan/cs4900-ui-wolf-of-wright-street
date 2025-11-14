@@ -1,30 +1,44 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { TransactionService } from '../services/transaction.service';
+import { TransactionService } from '../../services/transaction.service';
 import { TransactionDetailComponent } from '../transaction-detail/transaction-detail.component';
 
 @Component({
   selector: 'app-edit-transaction',
   standalone: true,
-  imports: [CommonModule, TransactionDetailComponent],
+  imports: [TransactionDetailComponent],
   templateUrl: './edit-transaction.component.html',
   styleUrl: './edit-transaction.component.scss',
 })
 export class EditTransactionComponent {
+  title = 'Edit Transaction';
+
   private readonly transactionService = inject(TransactionService);
 
-  // use the service's signal in the list component
   readonly transactions = this.transactionService.transactions;
 
-  // signal to hold the current text input
-  readonly newName = signal('');
+  newName = signal<string>('');
+  newAmount = signal<number | null>(null);
 
-  onNameInput(value: string): void {
-    this.newName.set(value);
+  onNameInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.newName.set(target?.value ?? '');
   }
 
-  addTransaction(): void {
-    this.transactionService.add(this.newName());
+  onAmountInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.newAmount.set(target ? target.valueAsNumber : null);
+  }
+
+  addFromForm(): void {
+    const name = this.newName().trim();
+    const amount = this.newAmount();
+
+    if (!name || amount === null || Number.isNaN(amount)) {
+      return;
+    }
+
+    this.transactionService.addTransaction(name, amount);
     this.newName.set('');
+    this.newAmount.set(null);
   }
 }

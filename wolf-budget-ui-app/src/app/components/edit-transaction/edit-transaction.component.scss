@@ -2,6 +2,7 @@
 $border-color: #ccc;
 $hover-color: #e6f7ff;
 $item-bg: #f9f9f9;
+@use 'sass:color';
 
 h2 {
   color: #333;
@@ -28,7 +29,7 @@ ul {
 
     
     &:nth-child(even) {
-      background-color: lighten($item-bg, 10%);
+      background-color: color.adjust($item-bg, $lightness: 10%);
     }
   }
 }

@@ -1,0 +1,144 @@
+/* Wrapper */
+.style-demo {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+  background: var(--color-honeydew);
+  border-radius: 16px;
+}
+
+/* Header */
+.style-demo__header {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-whisper-ridge);
+}
+
+.style-demo__subtitle {
+  font-size: 0.95rem;
+  color: var(--color-chain-gray);
+}
+
+/* Blocks */
+.style-demo__block {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Typography */
+h1 {
+  font-family: var(--font-heading);
+  color: var(--color-forest-green);
+  font-size: 40px;
+  margin: 0 0 0.25rem;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  color: var(--color-amazon);
+  font-size: 32px;
+  margin: 1rem 0 0.5rem;
+}
+
+h3 {
+  font-family: var(--font-heading-mono);
+  color: var(--color-charcoal);
+  font-size: 26px;
+}
+
+h4 {
+  font-family: var(--font-heading-mono);
+  color: var(--color-chain-gray);
+  font-size: 22px;
+}
+
+h5 {
+  font-family: var(--font-heading-mono);
+  color: var(--color-rich-brown);
+  font-size: 17px;
+}
+
+p {
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+.style-demo__link {
+  color: var(--color-forest-green);
+  text-decoration: underline;
+}
+
+/* Buttons */
+.style-demo__buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.btn {
+  font-family: var(--font-heading);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: 0.1s ease;
+  font-size: 0.95rem;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn--primary {
+  background: var(--color-amazon);
+  color: white;
+}
+
+.btn--secondary {
+  background: white;
+  border: 2px solid var(--color-amazon);
+  color: var(--color-amazon);
+}
+
+.btn--inline {
+  background: transparent;
+  color: var(--color-forest-green);
+  text-decoration: underline;
+}
+
+/* Swatches */
+.style-demo__swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.swatch {
+  border-radius: 10px;
+  padding: 0.9rem;
+  color: white;
+  font-family: var(--font-heading);
+}
+
+.swatch__hex {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.swatch--amazon { background: var(--color-amazon); }
+.swatch--honeydew { background: var(--color-honeydew); color: var(--color-charcoal); }
+.swatch--mustard { background: var(--color-mustard); }
+.swatch--coral { background: var(--color-coral); }
+.swatch--latigo { background: var(--color-latigo-bay); }
+.swatch--forest { background: var(--color-forest-green); }
+.swatch--rich-brown { background: var(--color-rich-brown); }
+.swatch--charcoal { background: var(--color-charcoal); }
+.swatch--chain-gray { background: var(--color-chain-gray); }
+.swatch--whisper-ridge { background: var(--color-whisper-ridge); color: var(--color-charcoal); }

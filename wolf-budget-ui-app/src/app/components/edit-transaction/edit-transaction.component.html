@@ -1,21 +1,42 @@
-<h2>Transaction List</h2>
+<section class="transaction-card">
+  <h2 class="transaction-card__title">{{ title }}</h2>
 
-<div class="add-transaction">
-  <input
-    type="text"
-    placeholder="new transaction name"
-    [value]="newName()"
-    (input)="onNameInput(($event.target as HTMLInputElement).value)"
-  />
-  <button type="button" (click)="addTransaction()">Add Item</button>
-</div>
+  <form
+    class="transaction-form"
+    (submit)="addFromForm(); $event.preventDefault()"
+  >
+    <label class="transaction-form__field">
+      <span>Name</span>
+      <input
+        type="text"
+        [value]="newName()"
+        (input)="onNameInput($event)"
+        placeholder="e.g. Groceries"
+      />
+    </label>
 
-<ul>
-  @for (transaction of transactions(); track transaction.id) {
-    <li class="transaction-item">
-      <app-transaction-detail [item]="transaction" />
-    </li>
-  } @empty {
-    <li>No transactions found.</li>
-  }
-</ul>
+    <label class="transaction-form__field">
+      <span>Amount</span>
+      <input
+        type="number"
+        [value]="newAmount() ?? ''"
+        (input)="onAmountInput($event)"
+        placeholder="e.g. -45.99"
+      />
+    </label>
+
+    <button type="submit" class="transaction-form__submit">
+      Add Transaction
+    </button>
+  </form>
+
+  <ul class="transaction-list">
+    @for (tx of transactions(); track tx.id) {
+      <li class="transaction-list__item">
+        <app-transaction-detail [transaction]="tx" />
+      </li>
+    } @empty {
+      <li class="transaction-list__empty">No transactions yet.</li>
+    }
+  </ul>
+</section>

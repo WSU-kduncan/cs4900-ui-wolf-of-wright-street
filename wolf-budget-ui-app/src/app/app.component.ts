@@ -1,11 +1,10 @@
-// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { BudgetChartComponent } from './features/budget-chart/budget-chart.component';
+import { StyleDemoComponent } from './components/style-demo/style-demo.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [BudgetChartComponent],
-  template: `<app-budget-chart />`,
+  imports: [StyleDemoComponent],
+  template: `<app-style-demo></app-style-demo>`,
 })
 export class AppComponent {}
