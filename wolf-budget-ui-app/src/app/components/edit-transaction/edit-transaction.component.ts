@@ -3,9 +3,7 @@ import { TransactionService } from '../../services/transaction.service';
 import { FormsModule} from '@angular/forms'; 
 import { TransactionDetailComponent } from '../transaction-detail/transaction-detail.component';
 import { Transaction } from '../../models/transaction.model';
-import { TransactionCategory } from '../../models/transactioncategory.model';
-import { User } from '../../models/user.model';
-import { CashflowType } from '../../models/cashflowtype.model';
+import { toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-edit-transaction',
@@ -21,7 +19,10 @@ export class EditTransactionComponent {
   tService = inject(TransactionService);
 
   //want signal from service from signal componet to interact with
-  transactionSignal = this.tService.transactions;
+  //transactionSignal = this.tService.transactions;
+  transactionSignal = toSignal(this.tService.getTransactions(), {
+    initialValue: [] as Transaction[],
+  });
 
   //form signals
   //newTransactionSignal = signal('');
