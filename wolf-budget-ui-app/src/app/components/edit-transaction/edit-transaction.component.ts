@@ -19,11 +19,8 @@ export class EditTransactionComponent {
   tService = inject(TransactionService);
 
   //want signal from service from signal componet to interact with
-  //transactionSignal = this.tService.transactions;
-  transactionSignal = toSignal(this.tService.getTransactions(), {
-    initialValue: [] as Transaction[],
-  });
-
+  transactionSignal = this.tService.transactions;
+  
   //form signals
   //newTransactionSignal = signal('');
   descriptionSignal = signal('');
@@ -62,8 +59,8 @@ export class EditTransactionComponent {
       amount: amount
     };
     // service to add transaction
-    this.tService.createTransaction(newTransactionObject);
-
+    //this.tService.createTransaction(newTransactionObject);
+     this.tService.createTransaction(newTransactionObject);
     //two way bound signal in html, make sure to clear or value 
     // will stay same in input box
     this.descriptionSignal.set('');
@@ -71,7 +68,7 @@ export class EditTransactionComponent {
     this.dateSignal.set(new Date().toISOString().substring(0, 10));
     this.categorySignal.set('Bills');
     this.cashflowTypeSignal.set('Expense');
-  }
 
- 
+
+  }
 }

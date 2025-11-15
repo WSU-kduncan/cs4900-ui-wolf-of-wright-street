@@ -9,35 +9,19 @@ import { Observable, tap } from 'rxjs';
 export class TransactionService {
   transactions = signal<Transaction[]>([]); // empty now since want to call from DB
 
-  createTransaction(newTransaction: Transaction) {
+  createTransaction(newTransaction: Transaction): Observable<Transaction> {
     console.log('called create inside service');
     this.transactions.update(trans => [...trans, newTransaction]);
-  // post to back end
-  this.http.post<Transaction>(
+    // post to back end
+    return this.http.post<Transaction>(
     'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions',
     newTransaction
-  ).subscribe({
-    next: (saved) => {
-      console.log('Transaction saved', saved);
-      // Optionally replace the temporary one with saved (if backend adds ID)
-      this.transactions.update(trans => {
-        return trans.map(t => t === newTransaction ? saved : t);
-      });
-    },
-    error: (err) => console.error('Failed to save transaction', err)
-  });
+    );
   }
 
   getTransactions(): Observable<Transaction[]> {
     const url = 'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions';
-
-    return this.http.get<Transaction[]>(url).pipe(
-      tap((data: Transaction[]) => {
-        // Update the signal when the HTTP call succeeds
-        this.transactions.set(data);
-        console.log('Fetched transactions:', data);
-      })
-    );
+    return this.http.get<Transaction[]>(url);
   }
 
   private loadTransactions() {
