@@ -1,6 +1,7 @@
 import { signal, Injectable } from '@angular/core';
 import { Transaction } from '../models/transaction.model';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,12 @@ export class TransactionService {
     this.transactions.set([...this.transactions(), newTransaction]);
   }
 
-  constructor() { }
+  getTransactions(): Observable<Transaction[]> {
+  const url = 'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions';
+  return this.http.get<Transaction[]>(url);
+  }
+
+
+  // add HTTP client object
+  constructor(private http: HttpClient) { }
 }

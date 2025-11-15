@@ -22,7 +22,7 @@ export class EditTransactionComponent {
   //want signal from service from signal componet to interact with
   transactionSignal = this.tService.transactions;
 
-  //store name from inputBox into signal to grab value later
+  //store name from inputBox into signal to grab value later for insertion
   newTransactionSignal = signal('');
 
   // keep track current transaction in signal array as we iterate
@@ -35,6 +35,7 @@ export class EditTransactionComponent {
     
     if(!nameField) return; // exit, nothing to add if null
     
+    // build object for insertion using interface
     const newTransactionObject: Transaction = {
       // unique number based on timestamp
       id: Date.now(),
@@ -48,8 +49,6 @@ export class EditTransactionComponent {
     // will stay same in input box
     this.newTransactionSignal.set('');
   }
-
-  
 
  
 }
