@@ -16,6 +16,31 @@
     
   </ul>
   <!-- Doing add for now since HW called for Add, but will switch to edit later -->
-  <input type="text" [(ngModel)]="newTransactionSignal" placeholder="New Transaction Name" >
+ <div class="add-transaction-form">
+  <input
+    type="text"
+    [(ngModel)]="descriptionSignal"
+    placeholder="Transaction Description"
+  >
+  <input
+    type="number"
+    [(ngModel)]="amountSignal"
+    placeholder="Amount"
+  >
+  <input
+    type="date"
+    [(ngModel)]="dateSignal"
+  >
+  <input
+    type="text"
+    [(ngModel)]="categorySignal"
+    placeholder="Category"
+  >
+  <input
+    type="text"
+    [(ngModel)]="cashflowTypeSignal"
+    placeholder="Cashflow Type"
+  >
   <button (click)="createTransaction()">Add Transaction</button>
+</div>
 } 

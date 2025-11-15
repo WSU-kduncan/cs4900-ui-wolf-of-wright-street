@@ -1,5 +1,6 @@
 import { Component, Input, signal } from '@angular/core';
 import { Transaction } from '../../models/transaction.model';
+import { CommonModule } from '@angular/common';
 // interface Transaction {
 //   id: number;
 //   transactionName: string;
@@ -7,7 +8,7 @@ import { Transaction } from '../../models/transaction.model';
 
 @Component({
   selector: 'app-transaction-detail',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './transaction-detail.component.html',
   styleUrl: './transaction-detail.component.scss',
   standalone: true
