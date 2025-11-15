@@ -2,7 +2,7 @@ import { User } from './user.model';
 import { TransactionCategory } from './transactioncategory.model';
 
 export interface Transaction {
-  id: number;
+  id?: number;
   //user: User;
   //category: TransactionCategory;
   // had to flatten since API send back info flat as well rather than object

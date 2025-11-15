@@ -36,20 +36,24 @@ export class EditTransactionComponent {
 
   // runs when called, in our case add transaction clicked
   createTransaction() {
+    console.log('called create');
     //get values from signals
     const description = this.descriptionSignal();
     const amount = this.amountSignal();
     const date = this.dateSignal();
     const categoryName = this.categorySignal();
-    const cashflowName = this.cashflowTypeSignal();
+    //const cashflowName = this.cashflowTypeSignal();
     const userEmail = this.userEmailSignal();
 
-    if(!amount || categoryName || cashflowName || date === null) return; // exit, nothing to add if null
-    
+    if(!amount || !categoryName || !date === null) 
+    {  
+      console.log('triggered empty');
+      return; // exit, nothing to add if null
+    }
     // build object for insertion using interface
     // Build a new Transaction object
     const newTransactionObject: Transaction = {
-      id: 0, // backend usually assigns real ID
+      
       userEmail: userEmail,
       categoryName: categoryName,
       transactionDateTime: new Date(date).toISOString(), // ensure ISO string
