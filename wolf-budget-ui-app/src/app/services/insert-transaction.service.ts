@@ -1,0 +1,21 @@
+import { signal, Injectable } from '@angular/core';
+import { Transaction } from '../models/transaction.model';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class InsertTransactionService {
+  transactions = signal<{ id: number; transactionName: string }[]>([
+    { id: 1, transactionName: 'Transaction One' },
+    { id: 2, transactionName: 'Transaction Two' },
+    { id: 3, transactionName: 'Transaction Three' },
+    { id: 4, transactionName: 'Transaction Four' }
+  ]);
+
+  insertTransaction(newTransaction: Transaction) {
+    this.transactions.set([...this.transactions(), newTransaction]);
+  }
+
+  constructor() { }
+}

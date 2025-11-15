@@ -1,9 +1,11 @@
 <h2>Insert Transaction</h2>
 
-@if (transactions) {
+@if (transactionSignal()) {
   <ul>
-    @for (transaction of transactions; track transaction.id) {
-      <li class="transaction-item">{{ transaction.transactionName }}</li>
+    @for (transaction of transactionSignal(); track transaction.id) {
+      <li class="transaction-item">{{ transaction.transactionName }}
+        <app-transaction [transaction]="transaction"></app-transaction>
+      </li>
 
     }
       @empty {
@@ -13,6 +15,5 @@
   </ul>
 } 
 
-<button class="insert-btn">
-  Insert Transaction
-</button>
+  <input type="text" [(ngModel)]="newSignal" placeholder="New Transaction Name" >
+  <button (click)="insertTransaction()">Add Transaction</button>
