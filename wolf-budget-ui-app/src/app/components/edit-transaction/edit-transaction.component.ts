@@ -30,7 +30,7 @@ export class EditTransactionComponent {
   dateSignal = signal<string>(new Date().toISOString().substring(0, 10)); // default today
   categorySignal = signal<string>('Bills'); // default category
   cashflowTypeSignal = signal<string>('Expense'); // default cashflow type
-
+  userEmailSignal = signal<string>('user@wolf.com');
   // keep track current transaction in signal array as we iterate
   currentTransaction: WritableSignal <Transaction | null> = signal(null);
 
@@ -42,30 +42,19 @@ export class EditTransactionComponent {
     const date = this.dateSignal();
     const categoryName = this.categorySignal();
     const cashflowName = this.cashflowTypeSignal();
-    
+    const userEmail = this.userEmailSignal();
+
     if(!amount || categoryName || cashflowName || date === null) return; // exit, nothing to add if null
     
     // build object for insertion using interface
-     // Build a new Transaction object
+    // Build a new Transaction object
     const newTransactionObject: Transaction = {
-      id: Date.now(), // temporary unique ID, replace with backend ID after save
-          description,
-      amount,
-      transactionDateTime: new Date(date).toISOString(),
-      user: {
-        emailAddress: 'example@email.com', // ideally from logged-in user
-        firstName: 'John',
-        lastName: 'Doe'
-      } as User,
-      category: {
-        categoryName,
-        categoryDescription: '',
-        cashflowType: {
-          cashflowName,
-          cashflowDescription: '',
-          factor: 1
-        } as CashflowType
-      } as TransactionCategory
+      id: 0, // backend usually assigns real ID
+      userEmail: userEmail,
+      categoryName: categoryName,
+      transactionDateTime: new Date(date).toISOString(), // ensure ISO string
+      description: description || '', // optional field
+      amount: amount
     };
     // service to add transaction
     this.tService.createTransaction(newTransactionObject);

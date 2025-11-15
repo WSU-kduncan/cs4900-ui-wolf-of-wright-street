@@ -4,9 +4,8 @@
   <h3>{{ transaction.description }}</h3>
   <p><strong>Amount:</strong> {{ transaction.amount | currency }}</p>
   <p><strong>Date:</strong> {{ transaction.transactionDateTime | date:'short' }}</p>
-  <p><strong>Category:</strong> {{ transaction.category.categoryName }}</p>
-  <p><strong>Cashflow Type:</strong> {{ transaction.category?.cashflowType?.cashflowName }}</p>
-  <p><strong>User:</strong> {{ transaction.user.firstName }} {{ transaction.user?.lastName }} ({{ transaction.user?.emailAddress }})</p>
+  <p><strong>Category:</strong> {{ transaction.categoryName || 'N/A'}}</p>
+  <p><strong>User:</strong> {{ transaction.userEmail || 'N/A' }} </p>
 </div>
   
 }@else
