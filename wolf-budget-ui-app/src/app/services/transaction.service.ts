@@ -1,9 +1,11 @@
-import { signal, Injectable } from '@angular/core';
+import { signal, Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
+  private http = inject(HttpClient);
 
   // Transactions list (currently hard-coded)
     transactions = signal<{id: number, name: string}[]>(
