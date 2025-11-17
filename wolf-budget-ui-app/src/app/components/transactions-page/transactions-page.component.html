@@ -1,7 +1,7 @@
 <h2>Your Transactions:</h2>
 <p>
-@if(transactionSignal()) {
-    @for(transaction of transactionSignal(); track transaction.id) {
+@if(transactions()) {
+    @for(transaction of transactions(); track transaction.id) {
         <li class= "transaction">
             <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
         </li>

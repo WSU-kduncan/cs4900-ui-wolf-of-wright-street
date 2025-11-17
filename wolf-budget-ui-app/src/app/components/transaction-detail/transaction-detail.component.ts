@@ -1,4 +1,5 @@
 import { Component, Input, signal } from '@angular/core'; 
+import { Transaction } from '../../models/transaction.model'
 
 @Component({
   selector: 'app-transaction-detail',
@@ -8,5 +9,5 @@ import { Component, Input, signal } from '@angular/core';
   standalone: true
 })
 export class TransactionDetailComponent {
-  @Input({required: true}) transaction: {id: number, name: string} | null = null;
+  @Input({required: true}) transaction: Transaction | null = null;
 }
