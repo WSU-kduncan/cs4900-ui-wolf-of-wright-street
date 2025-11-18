@@ -17,15 +17,15 @@
     </canvas>
   </div>
 
+  <h3>Users (from API)</h3>
   <ul class="items">
-    @for (c of categories(); track c.id) {
+    @for (u of users(); track u.id) {
       <li class="item">
-        <span class="name">{{ c.name }}</span>
-        <span class="amt">${{ c.amount }}</span>
-        <span class="pct">{{ percentOfBudget(c) }}%</span>
+        <span class="name">{{ u.name }}</span>
+        <span class="amt">{{ u.email }}</span>
       </li>
     } @empty {
-      <li class="item muted">No categories yet.</li>
+      <li class="item muted">No users loaded.</li>
     }
   </ul>
 </section>
