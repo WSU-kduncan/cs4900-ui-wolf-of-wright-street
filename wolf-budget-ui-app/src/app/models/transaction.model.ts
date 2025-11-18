@@ -1,4 +1,8 @@
 export interface Transaction {
   id: number;
-  transactionName: string;
+  userEmail: string;
+  categoryName: string;
+  transactionDateTime: string;
+  description?: string;
+  amount: number;
 }

@@ -1,5 +1,5 @@
 @if (transaction) {
-    <h3>{{  transaction.transactionName }}</h3>
+    <h3>{{  transaction.id }} | {{ transaction.categoryName}}: {{ transaction.amount }}</h3>
 } @else {
     <p>No transactions</p>
 }

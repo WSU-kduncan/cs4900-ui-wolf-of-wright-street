@@ -1,8 +1,12 @@
 import { Component, Input, signal } from '@angular/core';
 
 interface Transaction {
-  id: number, 
-  transactionName: string
+  id: number;
+  userEmail: string;
+  categoryName: string;
+  transactionDateTime: string;
+  description?: string;
+  amount: number;
 }
 
 @Component({

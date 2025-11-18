@@ -3,6 +3,7 @@ import { InsertTransactionService } from '../../services/insert-transaction.serv
 import { Transaction } from '../../models/transaction.model';
 import { FormsModule } from '@angular/forms';
 import { TransactionComponent } from '../transaction/transaction.component'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-insert-transaction',
@@ -17,32 +18,18 @@ export class InsertTransactionComponent {
   // injects insert-transaction service
   service = inject(InsertTransactionService);
 
-  // variable storing transaction signal from service 
-  transactionSignal = this.service.transactions;
+  transactionSignal = signal('')
 
-  // placeholder for user inputting new transaction 
-  newSignal = signal('');
-
-  // not exactly sure 
-  currentTransaction: WritableSignal <Transaction | null> = signal(null);
+  public transactions = toSignal(
+    this.service.getTransactions(), { initialValue: []}
+  );
 
   // function called upon insert transaction button pressed 
   insertTransaction() {
-
-    // get new transaction name from input signal 
-    const nameField = this.newSignal();
-
-    if (!nameField) { return }
-    
-    const newTransactionObject: Transaction = {
-      id: Date.now(),
-      transactionName: nameField
-    }
-
-    this.service.insertTransaction(newTransactionObject)
-
-    this.newSignal.set('')
+    const name = this.transactionSignal();
+    if (!name) return;
   }
 
+  constructor() {  }
   
 }
