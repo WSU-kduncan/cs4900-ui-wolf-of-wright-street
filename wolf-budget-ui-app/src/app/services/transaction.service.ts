@@ -12,6 +12,7 @@ export class TransactionService {
   createTransaction(newTransaction: Transaction): Observable<Transaction> {
     console.log('called create inside service');
     this.transactions.update(trans => [...trans, newTransaction]);
+    console.log('past update');
     // post to back end
     return this.http.post<Transaction>(
     'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions',

@@ -51,7 +51,7 @@ export class EditTransactionComponent {
     // build object for insertion using interface
     // Build a new Transaction object
     const newTransactionObject: Transaction = {
-      
+      //id: Date.now(),
       userEmail: userEmail,
       categoryName: categoryName,
       transactionDateTime: new Date(date).toISOString(), // ensure ISO string
@@ -59,8 +59,23 @@ export class EditTransactionComponent {
       amount: amount
     };
     // service to add transaction
-    //this.tService.createTransaction(newTransactionObject);
-     this.tService.createTransaction(newTransactionObject);
+    this.tService.createTransaction(newTransactionObject)
+        .subscribe({
+        next: (response) => {
+    
+          console.log('Transaction successful:', response);
+        
+        },
+        error: (error) => {
+         
+          console.error('Transaction failed:', error);
+         
+        },
+        complete: () => {
+          
+          console.log('Transaction handled');
+        }
+      });
     //two way bound signal in html, make sure to clear or value 
     // will stay same in input box
     this.descriptionSignal.set('');
