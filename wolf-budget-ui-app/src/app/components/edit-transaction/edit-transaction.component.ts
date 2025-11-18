@@ -73,7 +73,7 @@ export class EditTransactionComponent {
         },
         complete: () => {
           
-          console.log('Transaction handled');
+          console.log('Transaction handled', newTransactionObject);
         }
       });
     //two way bound signal in html, make sure to clear or value 
