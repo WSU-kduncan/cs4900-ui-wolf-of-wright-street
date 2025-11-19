@@ -49,6 +49,11 @@ export class TransactionService {
     return this.http.put<Transaction>(url, changeTransaction);
   }
 
+  deleteTransaction(id: number): Observable<void> {
+     const url = `http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`;
+    return this.http.delete<void>(url);
+  }
+
   // add HTTP client object
   constructor(private http: HttpClient) { 
     this.loadTransactions();

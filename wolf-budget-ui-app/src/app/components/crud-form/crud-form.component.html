@@ -1,45 +1,24 @@
-<form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="transaction-form">
+<form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
   <div>
-    <label for="userEmail">User Email</label>
-    <input id="userEmail" type="email" formControlName="userEmail" />
-    <div *ngIf="transactionForm.get('userEmail')?.invalid && transactionForm.get('userEmail')?.touched">
-      <small *ngIf="transactionForm.get('userEmail')?.errors?.['required']">Email is required</small>
-      <small *ngIf="transactionForm.get('userEmail')?.errors?.['email']">Invalid email</small>
-    </div>
+    <label>Email</label>
+    <input type="email" formControlName="userEmail" placeholder="Enter your email">
   </div>
 
   <div>
-    <label for="categoryName">Category Name</label>
-    <input id="categoryName" type="text" formControlName="categoryName" />
-    <div *ngIf="transactionForm.get('categoryName')?.invalid && transactionForm.get('categoryName')?.touched">
-      <small *ngIf="transactionForm.get('categoryName')?.errors?.['required']">Category is required</small>
-      <small *ngIf="transactionForm.get('categoryName')?.errors?.['minlength']">Must be at least 3 characters</small>
-      <small *ngIf="transactionForm.get('categoryName')?.errors?.['maxlength']">Max 50 characters</small>
-    </div>
+    <label>Category</label>
+    <input type="text" formControlName="categoryName" placeholder="Enter category">
   </div>
 
   <div>
-    <label for="transactionDateTime">Transaction Date</label>
-    <input id="transactionDateTime" type="datetime-local" formControlName="transactionDateTime" />
+    <label>Description</label>
+    <textarea formControlName="description" placeholder="Enter description"></textarea>
   </div>
 
   <div>
-    <label for="description">Description</label>
-    <textarea id="description" formControlName="description" maxlength="300"></textarea>
+    <label>Amount</label>
+    <input type="number" formControlName="amount" placeholder="Enter amount">
   </div>
 
-  <div>
-    <label for="amount">Amount</label>
-    <input id="amount" type="number" step="0.01" formControlName="amount" />
-    <div *ngIf="transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched">
-      <small *ngIf="transactionForm.get('amount')?.errors?.['required']">Amount is required</small>
-      <small *ngIf="transactionForm.get('amount')?.errors?.['min']">Amount must be greater than 0</small>
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="transactionForm.invalid">
-    {{ isEditMode() ? 'Update Transaction' : 'Create Transaction' }}
-  </button>
-
-  <button type="button" (click)="router.navigate(['/transactions'])">Cancel</button>
+  <button type="submit">Submit Transaction</button>
 </form>
+

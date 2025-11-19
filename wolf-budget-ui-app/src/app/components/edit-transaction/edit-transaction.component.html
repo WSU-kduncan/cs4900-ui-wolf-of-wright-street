@@ -6,8 +6,8 @@
       <li class="transaction-item">
         <!-- removed from this for loop to bottom{{ transaction.transactionName }} -->
         <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
-        <button (click)="transaction.id != null && updateTransaction(transaction.id)">Edit</button>
-        <button >Delete</button>
+        <button (click)="updateTransaction(transaction.id!)">Edit</button>
+        <button (click)="deleteTransaction(transaction.id!)">Delete</button>
       </li>
       
     }

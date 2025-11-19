@@ -98,9 +98,26 @@ export class EditTransactionComponent {
     this.router.navigate(['/transactions', id]);
   }
 
-  deleteTransaction(id: number) {
-    // Optional: call service to delete transaction
+  deleteTransaction(id: number){
+  if (!id) {
+    console.error('No transaction ID provided for deletion');
+    return;
   }
+
+
+  // delete
+  this.tService.deleteTransaction(id).subscribe({
+    next: () => {
+      console.log(`Transaction ${id} deleted successfully`);
+      // Optional: navigate or refresh list
+      this.tService.transactions.update(list => list.filter(t => t.id !== id));
+    },
+    error: (err) => {
+      console.error(`Failed to delete transaction ${id}`, err);
+    }
+  });
+}
+
 
   trackById(index: number, transaction: any) {
     return transaction.id;

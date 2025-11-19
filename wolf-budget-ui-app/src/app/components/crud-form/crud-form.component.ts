@@ -79,36 +79,35 @@ export class CrudFormComponent implements OnInit {
     // validate on form
     if(this.transactionForm.invalid) return; 
     //if(!this.)
-
+    console.log('Submitted', this.transactionForm.get('amount')?.value);
+    // 
     const transactionData: Transaction = {
-      id: this.transactionId ?? undefined,
-      userEmail: this.userEmail(),
-      categoryName: this.categoryName(),
-      transactionDateTime: this.transactionDateTime(),
-      description: this.description(),
-      amount: this.amount()
+      id: this.transactionForm.get('id')?.value ?? undefined,
+      userEmail: this.transactionForm.get('userEmail')?.value,
+      categoryName: this.transactionForm.get('categoryName')?.value,
+      transactionDateTime: this.transactionForm.get('transactionDateTime')?.value || new Date().toISOString(),
+      description: this.transactionForm.get('description')?.value,
+      amount: this.transactionForm.get('amount')?.value
     };
 
-     if (this.isEditMode() && this.transactionId) {
-      // Update transaction
-      this.transactionService.updateTransaction(this.transactionId, transactionData)
-        .subscribe({
-          next: () => {
-            console.log('Transaction updated');
-            this.router.navigate(['/transactions']);
-          },
-          error: (err) => console.error('Failed to update transaction', err)
-        });
-    } else {
-      // Create new transaction
-      this.transactionService.createTransaction(transactionData)
-        .subscribe({
-          next: () => {
-            console.log('Transaction created');
-            this.router.navigate(['/transactions']);
-          },
-          error: (err) => console.error('Failed to create transaction', err)
-        });
+     if (this.isEditMode() && this.transactionForm.get('id')?.value) {
+    this.transactionService.updateTransaction(this.transactionForm.get('id')?.value, transactionData)
+      .subscribe({
+        next: () => {
+          console.log('Transaction updated');
+          this.router.navigate(['/transactions']);
+        },
+        error: (err) => console.error('Failed to update transaction', err)
+      });
+  } else {
+    this.transactionService.createTransaction(transactionData)
+      .subscribe({
+        next: () => {
+          console.log('Transaction created');
+          this.router.navigate(['/transactions']);
+        },
+        error: (err) => console.error('Failed to create transaction', err)
+      });
     }
   }
 }
