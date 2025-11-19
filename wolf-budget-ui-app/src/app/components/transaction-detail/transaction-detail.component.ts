@@ -2,10 +2,7 @@ import { Component, Input, signal } from '@angular/core';
 import { Transaction } from '../../models/transaction.model';
 import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../services/transaction.service';
-// interface Transaction {
-//   id: number;
-//   transactionName: string;
-// }
+
 
 @Component({
   selector: 'app-transaction-detail',
