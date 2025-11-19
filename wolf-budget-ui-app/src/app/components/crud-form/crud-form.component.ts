@@ -61,7 +61,7 @@ export class CrudFormComponent implements OnInit {
   }
 
   // load transaction if there and update signals to values
-  private loadTransaction(id: number): void {
+  private loadTransaction(id: number) {
     this.transactionService.getTransactionById(id).subscribe({
       next: (transaction) => {
         this.userEmail.set(transaction.userEmail);
@@ -69,6 +69,15 @@ export class CrudFormComponent implements OnInit {
         this.transactionDateTime.set(transaction.transactionDateTime);
         this.description.set(transaction.description ?? '');
         this.amount.set(transaction.amount);
+      // want form to take on values
+      this.transactionForm.patchValue({
+        id: transaction.id,
+        userEmail: transaction.userEmail,
+        categoryName: transaction.categoryName,
+        transactionDateTime: transaction.transactionDateTime,
+        description: transaction.description,
+        amount: transaction.amount
+      });
       },
       error: (err) => console.error('Failed to load transaction', err)
     });
