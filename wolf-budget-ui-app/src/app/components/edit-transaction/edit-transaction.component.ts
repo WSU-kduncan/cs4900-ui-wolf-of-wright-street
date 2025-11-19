@@ -20,6 +20,8 @@ export class EditTransactionComponent {
 
   //want signal from service from signal componet to interact with
   transactionSignal = this.tService.transactions;
+
+  isLoading = signal<boolean>(true);
   
   //form signals
   //newTransactionSignal = signal('');

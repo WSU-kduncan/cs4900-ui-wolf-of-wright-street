@@ -7,12 +7,13 @@
         <!-- removed from this for loop to bottom{{ transaction.transactionName }} -->
         <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
         <button>Edit</button>
+        <button>Delete</button>
       </li>
       
     }
-      @empty {
-        <li>No transactions found.</li>
-      }
+    @empty {
+      <li>No transactions found.</li>
+    }
     
   </ul>
   <!-- Doing add for now since HW called for Add, but will switch to edit later -->
