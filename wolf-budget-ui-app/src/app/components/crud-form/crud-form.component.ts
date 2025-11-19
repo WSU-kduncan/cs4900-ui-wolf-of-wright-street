@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, DestroyRef, ChangeDetectionStrategy, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { TransactionService } from '../../services/transaction.service';
 import { Transaction } from '../../models/transaction.model';
 
@@ -16,6 +16,7 @@ import { Transaction } from '../../models/transaction.model';
 export class CrudFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
+  transactionForm: FormGroup;
   transactionId?: number; // edit mode to hold id if passed
   isEditMode = signal(false); // lets us know if edit mode is in play
 
@@ -30,9 +31,22 @@ export class CrudFormComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private fb: FormBuilder,
-    private router: Router,
+    public router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.transactionForm = this.createTransactionForm();
+  }
+
+  createTransactionForm(transaction?: Transaction): FormGroup {
+    return this.fb.group({
+      id: [transaction?.id || null],
+      userEmail: [transaction?.userEmail || 'user@wolf.com', [Validators.required, Validators.email]],
+      categoryName: [transaction?.categoryName || '', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      transactionDateTime: [transaction?.transactionDateTime || new Date().toISOString(), Validators.required],
+      description: [transaction?.description || '', [Validators.maxLength(300)]],
+      amount: [transaction?.amount || 0, [Validators.required, Validators.min(0.01)]]
+    });
+  }
 
   // check route, if id passed then we want to edit, react to that
   ngOnInit(): void {
@@ -62,8 +76,9 @@ export class CrudFormComponent implements OnInit {
 
   //submit
   onSubmit(): void {
-    // Simple validation example
-    //if (!this.userEmail() || !this.categoryName() || this.amount() <= 0) return;
+    // validate on form
+    if(this.transactionForm.invalid) return; 
+    //if(!this.)
 
     const transactionData: Transaction = {
       id: this.transactionId ?? undefined,
@@ -74,12 +89,26 @@ export class CrudFormComponent implements OnInit {
       amount: this.amount()
     };
 
-    if (this.isEditMode()) {
-      this.transactionService.updateTransaction(this.transactionId!, transactionData)
-        .subscribe(() => this.router.navigate(['/transactions']));
+     if (this.isEditMode() && this.transactionId) {
+      // Update transaction
+      this.transactionService.updateTransaction(this.transactionId, transactionData)
+        .subscribe({
+          next: () => {
+            console.log('Transaction updated');
+            this.router.navigate(['/transactions']);
+          },
+          error: (err) => console.error('Failed to update transaction', err)
+        });
     } else {
+      // Create new transaction
       this.transactionService.createTransaction(transactionData)
-        .subscribe(() => this.router.navigate(['/transactions']));
+        .subscribe({
+          next: () => {
+            console.log('Transaction created');
+            this.router.navigate(['/transactions']);
+          },
+          error: (err) => console.error('Failed to create transaction', err)
+        });
     }
   }
 }

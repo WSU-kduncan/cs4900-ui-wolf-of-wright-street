@@ -6,8 +6,8 @@
       <li class="transaction-item">
         <!-- removed from this for loop to bottom{{ transaction.transactionName }} -->
         <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button (click)="transaction.id != null && updateTransaction(transaction.id)">Edit</button>
+        <button >Delete</button>
       </li>
       
     }
@@ -18,7 +18,7 @@
   </ul>
   <!-- Doing add for now since HW called for Add, but will switch to edit later -->
  <div class="add-transaction-form">
-  <input
+  <!-- <input
     type="text"
     [(ngModel)]="descriptionSignal"
     placeholder="Transaction Description"
@@ -41,7 +41,7 @@
     type="text"
     [(ngModel)]="cashflowTypeSignal"
     placeholder="Cashflow Type"
-  >
+  > commented out for new form-->
   <button (click)="createTransaction()">Add Transaction</button>
 </div>
 } 
