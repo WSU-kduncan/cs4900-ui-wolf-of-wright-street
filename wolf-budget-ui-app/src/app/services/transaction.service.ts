@@ -32,6 +32,22 @@ export class TransactionService {
     });
   }
 
+  getTransactionById(id: number | string): Observable<Transaction> {
+    const url = `http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`;
+    return this.http.get<Transaction>(url);
+  }
+
+  //update
+  updateTransaction(id: number, changeTransaction: Transaction): Observable<Transaction> {
+    const url = `http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`;
+    
+    
+    this.transactions.update(trans => 
+      trans.map(transaction => (transaction.id === id ? { ...transaction, ...changeTransaction } : transaction))
+    );
+
+    return this.http.put<Transaction>(url, changeTransaction);
+  }
 
   // add HTTP client object
   constructor(private http: HttpClient) { 
