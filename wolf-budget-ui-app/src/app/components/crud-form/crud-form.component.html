@@ -1,8 +1,5 @@
 <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>ID</label>
-    <input type="text" formControlName="id" readonly>
-  </div>
+  <input type="hidden" formControlName="id">
   <div>
     <label>Email</label>
     <input type="email" formControlName="userEmail" placeholder="Enter your email">
