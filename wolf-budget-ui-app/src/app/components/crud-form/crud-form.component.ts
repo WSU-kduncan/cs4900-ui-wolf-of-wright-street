@@ -4,6 +4,10 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { TransactionService } from '../../services/transaction.service';
 import { Transaction } from '../../models/transaction.model';
+import { TransactionCategory } from '../../models/transactioncategory.model';
+import { TransactionCategoryService  } from '../../services/transaction-category.service';
+import { forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crud-form',
@@ -16,9 +20,13 @@ import { Transaction } from '../../models/transaction.model';
 export class CrudFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
+
   transactionForm: FormGroup;
   transactionId?: number; // edit mode to hold id if passed
   isEditMode = signal(false); // lets us know if edit mode is in play
+  //transactionCategories: TransactionCategory[] = []; // want to hold array of possible values for categories
+  transactionCategories: WritableSignal<TransactionCategory[]> = signal([]);
+  selectedCategory: WritableSignal<TransactionCategory | null> = signal(null);
 
   // Signals for form fields with defaults
   userEmail = signal('user@wolf.com');
@@ -32,9 +40,11 @@ export class CrudFormComponent implements OnInit {
     private transactionService: TransactionService,
     private fb: FormBuilder,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private categoryService: TransactionCategoryService
   ) {
     this.transactionForm = this.createTransactionForm();
+    
   }
 
   createTransactionForm(transaction?: Transaction): FormGroup {
@@ -48,43 +58,97 @@ export class CrudFormComponent implements OnInit {
     });
   }
 
+  
+
   // check route, if id passed then we want to edit, react to that
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      if (idParam) {
-        this.transactionId = +idParam;
-        this.isEditMode.set(true);
-        this.loadTransaction(this.transactionId);
-      }
-    });
-  }
+  this.route.paramMap.subscribe(params => {
+    const idParam = params.get('id');
 
-  // load transaction if there and update signals to values
-  private loadTransaction(id: number) {
-    this.transactionService.getTransactionById(id).subscribe({
-      next: (transaction) => {
-        this.userEmail.set(transaction.userEmail);
-        this.categoryName.set(transaction.categoryName);
-        this.transactionDateTime.set(transaction.transactionDateTime);
-        this.description.set(transaction.description ?? '');
-        this.amount.set(transaction.amount);
-      // want form to take on values
-      this.transactionForm.patchValue({
-        id: transaction.id,
-        userEmail: transaction.userEmail,
-        categoryName: transaction.categoryName,
-        transactionDateTime: transaction.transactionDateTime,
-        description: transaction.description,
-        amount: transaction.amount
+    if (idParam) {
+      this.transactionId = +idParam;
+      this.isEditMode.set(true);
+
+      // If editing, fetch both categories and transaction
+      forkJoin({
+        categories: this.categoryService.getCategories(),
+        transaction: this.transactionService.getTransactionById(this.transactionId)
+      }).subscribe({
+        next: ({ categories, transaction }) => {
+          this.transactionCategories.set(categories);
+
+          // Patch form
+          this.transactionForm.patchValue({
+            id: transaction.id,
+            userEmail: transaction.userEmail,
+            categoryName: transaction.categoryName,
+            transactionDateTime: transaction.transactionDateTime,
+            description: transaction.description ?? '',
+            amount: transaction.amount
+          });
+
+          // Set selectedCategory
+          const cat = categories.find(c => c.categoryName === transaction.categoryName) ?? null;
+          this.selectedCategory.set(cat);
+        },
+        error: (err) => console.error('Failed to load transaction or categories', err)
       });
-      },
-      error: (err) => console.error('Failed to load transaction', err)
-    });
-  }
+
+    } else {
+      // If not editing, just load categories
+      this.categoryService.getCategories().subscribe({
+        next: (categories) => this.transactionCategories.set(categories),
+        error: (err) => console.error('Failed to load categories', err)
+      });
+    }
+  });
+}
+
+// private loadTransaction(id: number): void {
+//   // Ensure categories are loaded first
+//   this.categoryService.getCategories().subscribe({
+//     next: (categories) => {
+//       this.transactionCategories.set(categories); // fill signal with categories
+
+//       // Now fetch the transaction
+//       this.transactionService.getTransactionById(id).subscribe({
+//         next: (transaction) => {
+//           // Patch form values
+//           this.transactionForm.patchValue({
+//             id: transaction.id,
+//             userEmail: transaction.userEmail,
+//             categoryName: transaction.categoryName, // bind FK name
+//             transactionDateTime: transaction.transactionDateTime,
+//             description: transaction.description ?? '',
+//             amount: transaction.amount
+//           });
+
+//           // Find category object in categories array
+//           const cat = categories.find(c => c.categoryName === transaction.categoryName) ?? null;
+//           this.selectedCategory.set(cat);
+
+//           // Update signals if tracking individually
+//           this.userEmail.set(transaction.userEmail);
+//           this.transactionDateTime.set(transaction.transactionDateTime);
+//           this.description.set(transaction.description ?? '');
+//           this.amount.set(transaction.amount);
+//         },
+//         error: (err) => console.error('Failed to load transaction', err)
+//       });
+//     },
+//     error: (err) => console.error('Failed to load categories', err)
+//   });
+// }
+
+  // private loadCategories(){
+  //   this.categoryService.getCategories().subscribe({
+  //     next: (data: TransactionCategory[]) => this.categories = data,
+  //     error: (err) => console.error('Failed to load categories', err)
+  //   });
+  // }
 
   //submit
-  onSubmit(): void {
+  onSubmit(){
     // validate on form
     if(this.transactionForm.invalid) return; 
     //if(!this.)

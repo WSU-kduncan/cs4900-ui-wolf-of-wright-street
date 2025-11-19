@@ -1,4 +1,4 @@
-import { CashflowType } from './cashflowtype.model';
+// import { CashflowType } from './cashflowtype.model';
 
 export interface TransactionCategory {
   categoryName: string;

@@ -5,9 +5,19 @@
     <input type="email" formControlName="userEmail" placeholder="Enter your email">
   </div>
 
-  <div>
+  <!-- <div>
     <label>Category</label>
     <input type="text" formControlName="categoryName" placeholder="Enter category">
+  </div> -->
+
+  <div>
+    <label>Category</label>
+    <select formControlName="categoryName">
+      <option value="" disabled>Select a category</option>
+      <option *ngFor="let category of transactionCategories()" [value]="category.categoryName">
+        {{ category.categoryName }}
+      </option>
+    </select>
   </div>
 
   <div>
