@@ -68,6 +68,7 @@ export class TransactionFormComponent {
       // Success: Show message and navigate
       this.successMessage.set('Transaction created successfully!');
       this.isSubmitting.set(false);
+      this.transactionForm.reset();
       
       // Navigate to detail page after delay
       setTimeout(() => {

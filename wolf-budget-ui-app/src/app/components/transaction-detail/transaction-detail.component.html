@@ -1,5 +1,6 @@
 @if (transaction) {
     <h3>{{ transaction.id }} | {{ transaction.categoryName }}: {{ transaction.amount }}</h3>
+    <h4>{{ transaction.transactionDateTime }}, {{ transaction.description }}</h4>
 } @else {
     <p>There is no transaction.</p>
 }

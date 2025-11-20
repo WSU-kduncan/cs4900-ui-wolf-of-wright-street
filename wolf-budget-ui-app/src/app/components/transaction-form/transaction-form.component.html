@@ -1,8 +1,8 @@
 <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="transaction-form">
     
-    <!-- Email Field -->>
+    <!-- Email Field -->
     <div class="form-field">
-        <label for="userEmail" class="field-label required">User Email</label>
+        <label for="userEmail" class="field-label required">User Email: </label>
         <input
             id="userEmail"
             type="text"
@@ -16,9 +16,9 @@
         }
     </div>
 
-    <!-- Category Name Field -->>
+    <!-- Category Name Field -->
     <div class="form-field">
-        <label for="categoryName" class="field-label required">Category</label>
+        <label for="categoryName" class="field-label required">Category: </label>
         <select
         id="categoryName"
         class="field-select"
@@ -30,9 +30,9 @@
         </select>
     </div>
 
-    <!-- Description Field -->>
+    <!-- Description Field -->
     <div class="form-field">
-        <label for="description" class="field-label">Description</label>
+        <label for="description" class="field-label">Description: </label>
         <textarea
         id="description"
         class="field-textarea"
@@ -46,9 +46,9 @@
         }
     </div>
 
-    <!-- Amount Field -->>
+    <!-- Amount Field -->
     <div class="form-field">
-        <label for="amount" class="field-label required">Amount</label>
+        <label for="amount" class="field-label required">Amount: </label>
         <input
             id="amount"
             type="number"
