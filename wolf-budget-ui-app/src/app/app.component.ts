@@ -5,7 +5,7 @@ import { EditTransactionComponent } from './components/edit-transaction/edit-tra
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EditTransactionComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

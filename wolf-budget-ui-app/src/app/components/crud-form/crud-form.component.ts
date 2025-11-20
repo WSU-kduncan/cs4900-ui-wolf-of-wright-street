@@ -61,7 +61,7 @@ export class CrudFormComponent implements OnInit {
   
 
   // check route, if id passed then we want to edit, react to that
-  ngOnInit(): void {
+  ngOnInit() {
   this.route.paramMap.subscribe(params => {
     const idParam = params.get('id');
 
@@ -92,6 +92,9 @@ export class CrudFormComponent implements OnInit {
       });
 
     } else {
+      //ensure edit is false
+      this.isEditMode.set(false);
+      
       this.categoryService.getCategories().subscribe({
         next: (categories) => this.transactionCategories.set(categories),
         error: (err) => console.error('Failed to load categories', err)
