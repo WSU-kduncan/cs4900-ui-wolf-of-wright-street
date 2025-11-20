@@ -4,11 +4,14 @@
     @for(transaction of transactions(); track transaction.id) {
         <li class= "transaction">
             <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
-            <button (click)="onDelete(transaction.id)">DELETE</button>
+            <button (click)="onEdit(transaction.id!)">EDIT</button>
+            <button (click)="onDelete(transaction.id!)">DELETE</button>
+
         </li>
     } @empty {
         <p>There are no transactions to display.</p>
     }
 }
 </p>
-<app-transaction-form></app-transaction-form>
+
+<button (click)="onAdd()">Add Transaction</button>

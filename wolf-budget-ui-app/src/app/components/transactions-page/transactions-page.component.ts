@@ -3,11 +3,12 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { TransactionService } from '../../services/transaction.service';
 import { FormsModule } from '@angular/forms'
 import { TransactionDetailComponent } from '../transaction-detail/transaction-detail.component'
-import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
+import { Router } from '@angular/router'; 
+
 
 @Component({
   selector: 'app-transactions-page',
-  imports: [FormsModule, TransactionDetailComponent, TransactionFormComponent],
+  imports: [FormsModule, TransactionDetailComponent],
   templateUrl: './transactions-page.component.html',
   styleUrl: './transactions-page.component.scss',
   standalone: true
@@ -22,6 +23,8 @@ export class TransactionsPageComponent {
   // Input box Signal
   newTransactionSignal = signal('');
 
+    router = inject(Router);
+
   // Get transactions
   public transactions = this.transactionService.transactions;
 
@@ -29,7 +32,23 @@ export class TransactionsPageComponent {
     this.transactions = this.transactionService.transactions;
   }
 
+  // DELETE transaction
   onDelete(id: number) {
-  this.transactionService.deleteTransaction(id).subscribe();
+    this.transactionService.deleteTransaction(id).subscribe({
+      next: () => console.log(`Deleted transaction ${id}`),
+      error: err => console.error(err),
+    });
   }
+
+    onAdd() {
+    // Navigate to form for creating a new transaction
+    this.router.navigate(['/transactions/new']);
+  }
+
+  onEdit(id: number) {
+    // Navigate to form for editing an existing transaction
+    this.router.navigate(['/transactions', id]);
+  }
+
+  
 }
