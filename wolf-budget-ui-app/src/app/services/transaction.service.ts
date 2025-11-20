@@ -22,4 +22,9 @@ export class TransactionService {
   createTransaction(newTransaction: Transaction): Observable<Transaction> {
     return this.http.post<Transaction>('http://localhost:8080/Wolf_of_Wright_Street_Service/transactions', newTransaction);
   }
+
+  // DELETE: Remove a transaction by transaction id
+  deleteTransaction(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`);
+  }
 }

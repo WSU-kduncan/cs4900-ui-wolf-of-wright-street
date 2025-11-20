@@ -4,6 +4,7 @@
     @for(transaction of transactions(); track transaction.id) {
         <li class= "transaction">
             <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
+            <button (click)="deleteTransaction(transaction.id)">
         </li>
     } @empty {
         <p>There are no transactions to display.</p>
