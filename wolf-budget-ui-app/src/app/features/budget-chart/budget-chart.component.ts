@@ -1,7 +1,10 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { toSignal } from '@angular/core/rxjs-interop';
+
+import { TransactionService, UserDto } from '../../services/transaction.service';
 
 type Category = { id: number; name: string; amount: number };
 
@@ -13,50 +16,55 @@ type Category = { id: number; name: string; amount: number };
   styleUrls: ['./budget-chart.component.scss'],
 })
 export class BudgetChartComponent {
-  // total budget
-  budget = signal<number>(2500);
+  private readonly transactionService = inject(TransactionService);
 
-  // editable sample data
-  categories = signal<Category[]>([
-    { id: 1, name: 'Rent', amount: 1200 },
-    { id: 2, name: 'Groceries', amount: 450 },
-    { id: 3, name: 'Utilities', amount: 180 },
-    { id: 4, name: 'Transport', amount: 220 },
+  // Homework: convert Observable<UserDto[]> to a signal with initial []
+  readonly users = toSignal(this.transactionService.getUsers(), {
+    initialValue: [] as UserDto[],
+  });
+
+  // --- static budget + categories for existing chart ---
+
+  readonly budget = signal(3000);
+
+  readonly categories = signal<Category[]>([
+    { id: 1, name: 'Housing', amount: 1200 },
+    { id: 2, name: 'Food', amount: 600 },
+    { id: 3, name: 'Utilities', amount: 300 },
+    { id: 4, name: 'Fun', amount: 200 },
   ]);
 
-  // sums
-  used = computed(() =>
-    this.categories().reduce((sum, c) => sum + c.amount, 0)
+  readonly used = computed(() =>
+    this.categories().reduce((sum, c) => sum + c.amount, 0),
   );
-  remaining = computed(() => Math.max(this.budget() - this.used(), 0));
-  over = computed(() => Math.max(this.used() - this.budget(), 0));
 
-  // Chart data derived from categories + remaining
-  pieLabels = computed<string[]>(() => {
-    const labels = this.categories().map(c => c.name);
-    if (this.remaining() > 0) labels.push('Remaining');
-    return labels;
-  });
+  readonly over = computed(() =>
+    Math.max(this.used() - this.budget(), 0),
+  );
 
-  pieData = computed<number[]>(() => {
-    const data = this.categories().map(c => c.amount);
-    if (this.remaining() > 0) data.push(this.remaining());
-    return data;
-  });
+  readonly remaining = computed(() =>
+    Math.max(this.budget() - this.used(), 0),
+  );
 
-  pieConfig = computed<ChartConfiguration<'doughnut'>>(() => ({
-    type: 'doughnut',
+  readonly pieConfig = computed<ChartConfiguration<'pie'>>(() => ({
+    type: 'pie',
     data: {
-      labels: this.pieLabels(),
+      labels: this.categories().map(c => c.name),
       datasets: [
         {
-          data: this.pieData(),
-          // do not set colors; default palette is fine for the assignment
+          data: this.categories().map(c => c.amount),
+          backgroundColor: [
+            '#3B7A57', // Amazon
+            '#FFC857', // Mustard
+            '#E27D60', // Coral
+            '#8A5188', // Latigo Bay
+          ],
         },
       ],
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       cutout: '45%',
       plugins: {
         legend: { position: 'right' },
@@ -70,4 +78,3 @@ export class BudgetChartComponent {
     return Math.round((cat.amount / this.budget()) * 100);
   }
 }
-
