@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TransactionService } from '../../services/transaction.service';
-import { Transaction } from '../../models/transaction.model'
+import { createTransaction } from '../../models/transaction.model'
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -28,10 +28,8 @@ export class TransactionFormComponent {
 
   private createForm(): FormGroup {
     return this.fb.group({
-      id: [0, [Validators.required]],
       userEmail: ['', [Validators.required]],
       categoryName: ['', [Validators.required]],
-      transactionDateTime: ['', [Validators.required]],
       description: [''],
       amount: [0, [Validators.required]]
     });
@@ -50,8 +48,7 @@ export class TransactionFormComponent {
 
   private createTransaction(formValue: any): void {
     // Transform data to a Transaction
-    const newTransaction: Transaction = {
-      id: Date.now(),
+    const newTransaction: createTransaction = {
       userEmail: formValue.userEmail,
       categoryName: formValue.categoryName,
       transactionDateTime: new Date().toISOString(),

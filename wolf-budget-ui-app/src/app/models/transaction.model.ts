@@ -6,5 +6,6 @@ export interface Transaction {
     transactionDateTime: string,
     description?: string,
     amount: number
-
 }
+
+export type createTransaction = Omit<Transaction, 'id'>

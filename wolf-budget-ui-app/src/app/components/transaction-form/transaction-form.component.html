@@ -17,6 +17,7 @@
     </div>
 
     <!-- Category Name Field -->
+     <!-- Actual way to be implemented; required a service and connections to the CategoryType data, so will implement later instead
     <div class="form-field">
         <label for="categoryName" class="field-label required">Category: </label>
         <select
@@ -28,6 +29,21 @@
         <option *ngFor="let category of transactionCategories()" [value]="category.categoryName">
             {{ category.categoryName }} </option>
         </select>
+    </div>
+    -->
+        <div class="form-field">
+        <label for="categoryName" class="field-label required">User Category: </label>
+        <input
+            id="categoryName"
+            type="text"
+            class="field-input"
+            [class.invalid]="isFieldInvalid('categoryName')"
+            formControlName="categoryName"
+            placeholder="Enter category..."
+            aria-describedby="categoryname-error">
+        @if (isFieldInvalid('categoryName')) {
+            <div id="title_error" class="field-error"> {{ getFieldError('categoryName') }}</div>
+        }
     </div>
 
     <!-- Description Field -->

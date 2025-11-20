@@ -22,18 +22,14 @@ export class TransactionsPageComponent {
   // Input box Signal
   newTransactionSignal = signal('');
 
-  // Get transactions using toSignal with API
-  public transactions = toSignal(
-    this.transactionService.getTransactions(), { initialValue: [] }
-  );
+  // Get transactions
+  public transactions = this.transactionService.transactions;
 
   constructor() {
-    this.transactionService.getTransactions().subscribe(data => {
-    console.log("API returned:", data);
-});
+    this.transactions = this.transactionService.transactions;
   }
 
   onDelete(id: number) {
   this.transactionService.deleteTransaction(id).subscribe();
-}
+  }
 }
