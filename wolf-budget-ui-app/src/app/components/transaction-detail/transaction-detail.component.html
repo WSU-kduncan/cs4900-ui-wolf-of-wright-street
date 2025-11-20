@@ -1,7 +1,16 @@
 @if (transaction) {
-    <h3>{{ transaction.id }} | {{ transaction.categoryName }}: {{ transaction.amount }}</h3>
-    <h4>{{ transaction.transactionDateTime }}, {{ transaction.description }}</h4>
-} @else {
-    <p>There is no transaction.</p>
+ <!-- display object -->
+<div>
+  <h3>{{ transaction.description }}</h3>
+  <p><strong>ID:</strong> {{ transaction.id }}</p>
+  <p><strong>Amount:</strong> {{ transaction.amount | currency }}</p>
+  <p><strong>Date:</strong> {{ transaction.transactionDateTime | date:'short' }}</p>
+  <p><strong>Category:</strong> {{ transaction.categoryName || 'N/A'}}</p>
+  <p><strong>User:</strong> {{ transaction.userEmail || 'N/A' }} </p>
+</div>
+  
+}@else
+{
+  <p>No transactions available</p>
 }
 

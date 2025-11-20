@@ -1,0 +1,37 @@
+@use "sass:color"; // had deprecation error, had to import this to fix
+$border-color: #ccc;
+$hover-color: #e6f7ff;
+$item-bg: #f9f9f9;
+
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-family: "Inter Bold";
+  font-size: 22px;
+  
+}
+
+
+ul {
+  list-style-type: none;
+  padding: 0;
+
+  .transaction-item {
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 6px 0;
+    background-color: $item-bg;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: $hover-color;
+      transform: translateY(-2px);
+    }
+
+    
+    &:nth-child(even) {
+      background-color: color.scale($item-bg, $lightness: 10%);
+    }
+  }
+}

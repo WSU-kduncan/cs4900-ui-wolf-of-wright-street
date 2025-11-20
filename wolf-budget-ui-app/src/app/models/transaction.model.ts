@@ -1,11 +1,14 @@
-// Transaction interface
-export interface Transaction {
-    id: number,
-    userEmail: string,
-    categoryName: string,
-    transactionDateTime: string,
-    description?: string,
-    amount: number
-}
+import { User } from './user.model';
+import { TransactionCategory } from './transactioncategory.model';
 
-export type createTransaction = Omit<Transaction, 'id'>
+export interface Transaction {
+  id?: number;
+  //user: User;
+  //category: TransactionCategory;
+  // had to flatten since API send back info flat as well rather than object
+  userEmail: string;
+  categoryName: string;
+  transactionDateTime: string; // ISO string from backend
+  description?: string; // optional
+  amount: number;
+}
