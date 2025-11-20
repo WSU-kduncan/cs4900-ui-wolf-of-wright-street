@@ -22,6 +22,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 export const appConfig: ApplicationConfig = {
   providers: [
     TransactionService,
+    
     //provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),

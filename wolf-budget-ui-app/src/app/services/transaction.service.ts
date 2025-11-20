@@ -1,66 +1,46 @@
-import { signal, Injectable } from '@angular/core';
-import { Transaction } from '../models/transaction.model';
+import { signal, Injectable, inject } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Transaction, createTransaction } from '../models/transaction.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
-  transactions = signal<Transaction[]>([]); // empty now since want to call from DB
+  private http = inject(HttpClient);
+  transactionsSignal = signal<Transaction[]>([]);
+  transactions = this.transactionsSignal.asReadonly();
 
-  createTransaction(newTransaction: Transaction): Observable<Transaction> {
-    console.log('called create inside service');
-    //this.transactions.update(trans => [...trans, newTransaction]);
-    console.log('past update');
-    // post to back end
-    return this.http.post<Transaction>(
-    'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions',
-    newTransaction
-    ).pipe(
-    tap(created => {
-      // NOW update your state using the returned object WITH ID
-      this.transactions.update(trans => [...trans, created]);
-    })
-  );;
-  }
-
-  getTransactions(): Observable<Transaction[]> {
-    const url = 'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions';
-    return this.http.get<Transaction[]>(url);
-  }
-
-  private loadTransactions() {
-    const url = 'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions';
-    this.http.get<Transaction[]>(url).subscribe(data => {
-      this.transactions.set(data);
-    });
-  }
-
-  getTransactionById(id: number | string): Observable<Transaction> {
-    const url = `http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`;
-    return this.http.get<Transaction>(url);
-  }
-
-  //update
-  updateTransaction(id: number, changeTransaction: Transaction): Observable<Transaction> {
-    const url = `http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`;
-    
-    
-    this.transactions.update(trans => 
-      trans.map(transaction => (transaction.id === id ? { ...transaction, ...changeTransaction } : transaction))
-    );
-
-    return this.http.put<Transaction>(url, changeTransaction);
-  }
-
-  deleteTransaction(id: number): Observable<void> {
-     const url = `http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`;
-    return this.http.delete<void>(url);
-  }
-
-  // add HTTP client object
-  constructor(private http: HttpClient) { 
+  constructor() { 
     this.loadTransactions();
+  }
+
+  refresh() {
+    this.loadTransactions();
+  }
+
+  // LOADS transactions from a link.
+  private loadTransactions() {
+    this.http.get<Transaction[]>('http://localhost:8080/Wolf_of_Wright_Street_Service/transactions')
+      .subscribe(data => { this.transactionsSignal.set(data)});
+  }
+
+  // GET Transactions from a link (the API)
+  getTransactions(): Observable<Transaction[]> {
+    const link = 'http://localhost:8080/Wolf_of_Wright_Street_Service/transactions';
+    return this.http.get<Transaction[]>(link);
+  }
+
+  // POST: Add a new transaction
+  createTransaction(newTransaction: createTransaction): Observable<Transaction> {
+    return this.http.post<Transaction>('http://localhost:8080/Wolf_of_Wright_Street_Service/transactions', newTransaction)
+    .pipe(tap(() => this.refresh()));
+  }
+
+  // DELETE: Remove a transaction by transaction id
+  deleteTransaction(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/Wolf_of_Wright_Street_Service/transactions/${id}`)
+    .pipe(tap(() => this.refresh()));
   }
 }
