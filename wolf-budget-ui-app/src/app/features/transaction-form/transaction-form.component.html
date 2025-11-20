@@ -1,0 +1,23 @@
+<h2>{{ editing ? 'Edit Transaction' : 'New Transaction' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>
+    Name:
+    <input formControlName="name" />
+  </label>
+  <div class="error" *ngIf="form.controls.name.invalid && form.controls.name.touched">
+    Name is required.
+  </div>
+
+  <label>
+    Amount:
+    <input type="number" formControlName="amount" />
+  </label>
+  <div class="error" *ngIf="form.controls.amount.invalid && form.controls.amount.touched">
+    Amount is required.
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">
+    {{ editing ? 'Save Changes' : 'Create Transaction' }}
+  </button>
+</form>

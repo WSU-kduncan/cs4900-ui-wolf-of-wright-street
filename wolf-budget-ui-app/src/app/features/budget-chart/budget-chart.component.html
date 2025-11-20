@@ -17,15 +17,21 @@
     </canvas>
   </div>
 
-  <h3>Users (from API)</h3>
+  <h3>Transactions</h3>
+
+  <button (click)="goToNew()">New Transaction</button>
+
   <ul class="items">
-    @for (u of users(); track u.id) {
+    @for (tx of transactions(); track tx.id) {
       <li class="item">
-        <span class="name">{{ u.name }}</span>
-        <span class="amt">{{ u.email }}</span>
+        <span class="name">{{ tx.name }}</span>
+        <span class="amt">{{ tx.amount }}</span>
+
+        <button (click)="edit(tx.id)">Edit</button>
+        <button (click)="onDelete(tx.id)">Delete</button>
       </li>
     } @empty {
-      <li class="item muted">No users loaded.</li>
+      <li class="item muted">No transactions loaded.</li>
     }
   </ul>
 </section>
