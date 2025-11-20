@@ -1,0 +1,17 @@
+<h2>Your Transactions:</h2>
+<p>
+@if(transactions()) {
+    @for(transaction of transactions(); track transaction.id) {
+        <li class= "transaction">
+            <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
+            <button (click)="onEdit(transaction.id!)">EDIT</button>
+            <button (click)="onDelete(transaction.id!)">DELETE</button>
+
+        </li>
+    } @empty {
+        <p>There are no transactions to display.</p>
+    }
+}
+</p>
+
+<button (click)="onAdd()">Add Transaction</button>
