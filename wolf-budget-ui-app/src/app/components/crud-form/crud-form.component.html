@@ -1,0 +1,30 @@
+<form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+  <input type="hidden" formControlName="id">
+  <div>
+    <label>Email</label>
+    <input type="email" formControlName="userEmail" placeholder="Enter your email">
+  </div>
+
+  <div>
+    <label>Category</label>
+    <select formControlName="categoryName">
+      <option value="" disabled>Select a category</option>
+      <option *ngFor="let category of transactionCategories()" [value]="category.categoryName">
+        {{ category.categoryName }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label>Description</label>
+    <textarea formControlName="description" placeholder="Enter description"></textarea>
+  </div>
+
+  <div>
+    <label>Amount</label>
+    <input type="number" formControlName="amount" placeholder="Enter amount">
+  </div>
+
+  <button type="submit">Submit Transaction</button>
+</form>
+

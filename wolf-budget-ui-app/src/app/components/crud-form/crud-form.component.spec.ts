@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditTransactionComponent } from './edit-transaction.component';
+import { CrudFormComponent } from './crud-form.component';
 
-describe('EditTransactionComponent', () => {
-  let component: EditTransactionComponent;
-  let fixture: ComponentFixture<EditTransactionComponent>;
+describe('CrudFormComponent', () => {
+  let component: CrudFormComponent;
+  let fixture: ComponentFixture<CrudFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditTransactionComponent]
+      imports: [CrudFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditTransactionComponent);
+    fixture = TestBed.createComponent(CrudFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
