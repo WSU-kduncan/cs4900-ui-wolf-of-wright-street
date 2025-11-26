@@ -92,7 +92,7 @@ a,
 .link-inline {
   font-family: "Roboto", system-ui, sans-serif;
   font-size: 15px;
-  color: 8A5188;  /* matches inline button color */
+  color: #8A5188;  
   text-decoration: underline;
   cursor: pointer;
 }
@@ -117,7 +117,7 @@ a:hover,
     border-color 150ms ease, box-shadow 150ms ease, transform 50ms ease;
 }
 
-/* Primary Button – filled Amazon green */
+/* Primary Button */
 .btn-primary {
   background-color:  #3B7A57;
   color: #ffffff;
@@ -135,7 +135,7 @@ a:hover,
   box-shadow: none;
 }
 
-/* Secondary Button – outline */
+/* Secondary Button  */
 .btn-secondary {
   background-color: transparent;
   color:   #3C9D9B;
@@ -194,9 +194,6 @@ a:hover,
 
 /* Labels */
 .form-group label {
-//   font-weight: 600;
-//   margin-bottom: 0.35rem;
-//   color: var(--color-charcoal);
   font-family: "Roboto Mono", monospace;
   font-size: 26px;         
   font-weight: 700;
@@ -250,7 +247,7 @@ a:hover,
 .form-group input.ng-touched.ng-invalid,
 .form-group select.ng-touched.ng-invalid,
 .form-group textarea.ng-touched.ng-invalid {
-  border-color: #E27D60; /* coral from your brand */
+  border-color: #E27D60; 
 }
 
 

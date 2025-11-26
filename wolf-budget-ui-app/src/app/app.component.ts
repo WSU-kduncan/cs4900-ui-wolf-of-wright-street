@@ -5,7 +5,7 @@ import { TransactionsPageComponent } from './components/transactions-page/transa
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TransactionsPageComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
