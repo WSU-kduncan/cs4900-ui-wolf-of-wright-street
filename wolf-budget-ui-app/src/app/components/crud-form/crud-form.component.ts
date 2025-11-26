@@ -106,7 +106,11 @@ export class CrudFormComponent implements OnInit {
   //submit
   onSubmit(){
     // validate on form
-    if(this.transactionForm.invalid) return; 
+    if(this.transactionForm.invalid) { 
+      // log back entry
+      this.transactionForm.markAllAsTouched(); 
+      return; 
+    }
     //if(!this.)
     console.log('Submitted', this.transactionForm.get('amount')?.value);
     // 
@@ -139,5 +143,6 @@ export class CrudFormComponent implements OnInit {
       });
     }
   }
+
 }
 

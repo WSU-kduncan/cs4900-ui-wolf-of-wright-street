@@ -1,30 +1,52 @@
-<form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+<form class="form-card" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+  @if (isEditMode()) {
+    <h2 >Edit Transaction</h2>
+  }@else
+  {
+    <h2>Insert Transaction</h2>
+  }
+
   <input type="hidden" formControlName="id">
-  <div>
+
+  <div class="form-group">
     <label>Email</label>
-    <input type="email" formControlName="userEmail" placeholder="Enter your email">
+    <input type="email" formControlName="userEmail" placeholder="Enter your email" readonly>
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Category</label>
     <select formControlName="categoryName">
       <option value="" disabled>Select a category</option>
-      <option *ngFor="let category of transactionCategories()" [value]="category.categoryName">
+      <option *ngFor="let category of transactionCategories()" 
+              [value]="category.categoryName">
         {{ category.categoryName }}
       </option>
     </select>
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Description</label>
     <textarea formControlName="description" placeholder="Enter description"></textarea>
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Amount</label>
-    <input type="number" formControlName="amount" placeholder="Enter amount">
+    <input type="number" formControlName="amount" placeholder="Enter amount" step="0.01">
   </div>
 
-  <button type="submit">Submit Transaction</button>
+  <div class="button-row">
+    
+  @if (isEditMode()) {
+    <button type="submit" class="btn btn-primary">Update Transaction</button>
+  }@else
+  {
+    <button type="submit" class="btn btn-primary">Submit Transaction</button>
+  }
+    <button routerLink="/transactions" class="btn btn-secondary">Back</button>
+  </div>
 </form>
+
+
+  
+
 
