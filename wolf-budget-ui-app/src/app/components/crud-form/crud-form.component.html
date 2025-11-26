@@ -11,6 +11,9 @@
   <div class="form-group">
     <label>Email</label>
     <input type="email" formControlName="userEmail" placeholder="Enter your email" readonly>
+    @if (isFieldInvalid('userEmail')) {
+              <div id="title-error" class="field-error">{{ getFieldError('userEmail') }}</div>
+    }
   </div>
 
   <div class="form-group">
@@ -22,6 +25,9 @@
         {{ category.categoryName }}
       </option>
     </select>
+    @if (isFieldInvalid('categoryName')) {
+              <div id="title-error" class="field-error">{{ getFieldError('categoryName') }}</div>
+    }
   </div>
 
   <div class="form-group">
@@ -32,6 +38,18 @@
   <div class="form-group">
     <label>Amount</label>
     <input type="number" formControlName="amount" placeholder="Enter amount" step="0.01">
+    @if (isFieldInvalid('amount')) {
+              <div id="title-error" class="field-error">{{ getFieldError('amount') }}</div>
+    }
+   
+  </div>
+
+  <div class="form-group">
+    <label>Transaction Date & Time</label>
+    <input type="datetime-local" formControlName="transactionDateTime" placeholder="Select date and time">
+    @if (isFieldInvalid('transactionDateTime')) {
+      <div id="title-error" class="field-error">{{ getFieldError('transactionDateTime') }}</div>
+    }
   </div>
 
   <div class="button-row">

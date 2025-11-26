@@ -236,6 +236,23 @@ a:hover,
   margin-top: 1.25rem;
 }
 
+.field-error {
+  color: #E27D60;   
+  margin-top: 0.25rem;
+  display: block;
+  font-family: "Roboto Mono", monospace;
+  font-size: 26px;         
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  
+}
+
+.form-group input.ng-touched.ng-invalid,
+.form-group select.ng-touched.ng-invalid,
+.form-group textarea.ng-touched.ng-invalid {
+  border-color: #E27D60; /* coral from your brand */
+}
+
 
 
 

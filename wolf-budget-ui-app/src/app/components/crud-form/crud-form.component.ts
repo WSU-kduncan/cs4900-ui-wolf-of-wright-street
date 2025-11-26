@@ -52,10 +52,22 @@ export class CrudFormComponent implements OnInit {
       id: [transaction?.id || null],
       userEmail: [transaction?.userEmail || 'user@wolf.com', [Validators.required, Validators.email]],
       categoryName: [transaction?.categoryName || '', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      transactionDateTime: [transaction?.transactionDateTime || new Date().toISOString(), Validators.required],
+      transactionDateTime: [
+      transaction ? this.formatDateTimeForInput(transaction.transactionDateTime) : this.formatDateTimeForInput(new Date()), Validators.required],
       description: [transaction?.description || '', [Validators.maxLength(300)]],
       amount: [transaction?.amount || 0, [Validators.required, Validators.min(0.01)]]
     });
+  } 
+
+  private formatDateTimeForInput(dateTime: string | Date): string {
+    const date = new Date(dateTime);
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const yyyy = date.getFullYear();
+    const MM = pad(date.getMonth() + 1);
+    const dd = pad(date.getDate());
+    const hh = pad(date.getHours());
+    const mm = pad(date.getMinutes());
+    return `${yyyy}-${MM}-${dd}T${hh}:${mm}`;
   }
 
   
@@ -80,7 +92,7 @@ export class CrudFormComponent implements OnInit {
             id: transaction.id,
             userEmail: transaction.userEmail,
             categoryName: transaction.categoryName,
-            transactionDateTime: transaction.transactionDateTime,
+            transactionDateTime: this.formatDateTimeForInput(transaction.transactionDateTime),
             description: transaction.description ?? '',
             amount: transaction.amount
           });
@@ -102,6 +114,48 @@ export class CrudFormComponent implements OnInit {
     }
     });
   }
+  
+  //validation
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.transactionForm.get(fieldName);
+    console.log('called is field invalid: ', field);
+    return !!(field?.invalid && (field?.dirty || field?.touched));
+  }
+  
+  //validation
+  private getFieldLabel(fieldName: string): string {
+  const labels: { [key: string]: string } = {
+    'userEmail': 'User Email',
+    'categoryName': 'Category',
+    'description': 'Description',
+    'amount': 'Amount',
+    'transactionDateTime': 'Time Transaction'
+  };
+  return labels[fieldName] || fieldName;
+}
+  //fix it
+  getFieldError(fieldName: string): string {
+    // Enhanced error message generation with signal-based validation
+    const field = this.transactionForm.get(fieldName);
+    if (field?.errors) {
+      if (field.errors['required']) {
+        return `${this.getFieldLabel(fieldName)} is required.`;
+      }
+      if (field.errors['minlength']) {
+        return `${this.getFieldLabel(fieldName)} must be at least ${field.errors['minlength'].requiredLength} characters.`;
+      }
+      if (field.errors['maxlength']) {
+        return `${this.getFieldLabel(fieldName)} cannot exceed ${field.errors['maxlength'].requiredLength} characters.`;
+      }
+      if (field.errors['min']) {
+        return `${this.getFieldLabel(fieldName)} must be at least ${field.errors['min'].min}.`;
+      }
+      if (field.errors['max']) {
+        return `${this.getFieldLabel(fieldName)} cannot exceed ${field.errors['max'].max}.`;
+      }
+    }
+    return '';
+  }
 
   //submit
   onSubmit(){
@@ -111,6 +165,15 @@ export class CrudFormComponent implements OnInit {
       this.transactionForm.markAllAsTouched(); 
       return; 
     }
+
+    // get date from form
+    const formDateFormat = this.transactionForm.get('transactionDateTime')?.value; // e.g., "2025-11-26T14:30"
+
+    // Convert local time to ISO string (UTC)
+    const instantFormat = new Date(formDateFormat).toISOString();
+
+  
+    
     //if(!this.)
     console.log('Submitted', this.transactionForm.get('amount')?.value);
     // 
@@ -118,7 +181,7 @@ export class CrudFormComponent implements OnInit {
       id: this.transactionForm.get('id')?.value ?? undefined,
       userEmail: this.transactionForm.get('userEmail')?.value,
       categoryName: this.transactionForm.get('categoryName')?.value,
-      transactionDateTime: this.transactionForm.get('transactionDateTime')?.value || new Date().toISOString(),
+      transactionDateTime: instantFormat || new Date().toISOString(),
       description: this.transactionForm.get('description')?.value,
       amount: this.transactionForm.get('amount')?.value
     };
