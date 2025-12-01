@@ -1,6 +1,6 @@
-@if (transaction) {
+<!-- @if (transaction) { -->
  <!-- display object -->
-<div>
+<!-- <div>
   <h3>{{ transaction.description }}</h3>
   <p><strong>ID:</strong> {{ transaction.id }}</p>
   <p><strong>Amount:</strong> {{ transaction.amount | currency }}</p>
@@ -12,5 +12,18 @@
 }@else
 {
   <p>No transactions available</p>
+} -->
+@if (transaction) {
+  <div class="transaction-inline">
+    <span class="title">{{ transaction.description }}</span>
+
+    <span>ID: {{ transaction.id }}</span>
+    <span>Amount: {{ transaction.amount | currency }}</span>
+    <span>Date: {{ transaction.transactionDateTime | date:'short' }}</span>
+    <span>Category: {{ transaction.categoryName || 'N/A' }}</span>
+    <span>User: {{ transaction.userEmail || 'N/A' }}</span>
+  </div>
+}@else {
+  <p class="muted-text">No transactions available</p>
 }
 
