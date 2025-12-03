@@ -1,17 +1,39 @@
-<h2>Your Transactions:</h2>
-<p>
-@if(transactions()) {
-    @for(transaction of transactions(); track transaction.id) {
-        <li class= "transaction">
-            <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
-            <button (click)="onEdit(transaction.id!)">EDIT</button>
-            <button (click)="onDelete(transaction.id!)">DELETE</button>
+<div class="transactions-container">
+<h2 class="h2">Your Transactions:</h2>
 
-        </li>
+@if (transactions()) {
+
+  <div class="transaction-list">
+    @for (transaction of transactions(); track transaction.id) {
+
+      <div class="transaction-row">
+
+        <div class="transaction-info">
+          <app-transaction-detail 
+            [transaction]="transaction">
+          </app-transaction-detail>
+        </div>
+
+        <div class="transaction-actions">
+          <button class="btn btn-secondary" (click)="onEdit(transaction.id!)">
+            Edit
+          </button>
+
+          <button class="btn btn-tertiary" (click)="onDelete(transaction.id!)">
+            Delete
+          </button>
+        </div>
+
+      </div>
+
     } @empty {
-        <p>There are no transactions to display.</p>
+      <p class="muted-text">There are no transactions to display.</p>
     }
-}
-</p>
+  </div>
 
-<button (click)="onAdd()">Add Transaction</button>
+}
+
+<div class="button-row">
+  <button class="btn btn-primary" (click)="onAdd()">Add Transaction</button>
+</div>
+</div>
