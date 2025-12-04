@@ -47,28 +47,31 @@ export class CrudFormComponent implements OnInit {
     
   }
 
+  // have to get around UTC issue
+  private currentTSString(): string {
+    const newDate = new Date();
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    return `${newDate.getFullYear()}-${pad(newDate.getMonth() + 1)}-${pad(newDate.getDate())}T${pad(newDate.getHours())}:${pad(newDate.getMinutes())}`;
+  }
+
   createTransactionForm(transaction?: Transaction): FormGroup {
     return this.fb.group({
       id: [transaction?.id || null],
       userEmail: [transaction?.userEmail || 'user@wolf.com', [Validators.required, Validators.email]],
       categoryName: [transaction?.categoryName || '', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       transactionDateTime: [
-      transaction ? this.formatDateTimeForInput(transaction.transactionDateTime) : this.formatDateTimeForInput(new Date()), Validators.required],
+      transaction ? this.formatDateTimeForInput(transaction.transactionDateTime) : this.currentTSString(), Validators.required],
       description: [transaction?.description || '', [Validators.maxLength(300)]],
       amount: [transaction?.amount || 0, [Validators.required, Validators.min(0.01)]]
     });
   } 
 
-  private formatDateTimeForInput(dateTime: string | Date): string {
-    const date = new Date(dateTime);
+  private formatDateTimeForInput(dateTimeUTC: string): string {
+    const date = new Date(dateTimeUTC); // UTC is automatically converted to local time
     const pad = (n: number) => n.toString().padStart(2, '0');
-    const yyyy = date.getFullYear();
-    const MM = pad(date.getMonth() + 1);
-    const dd = pad(date.getDate());
-    const hh = pad(date.getHours());
-    const mm = pad(date.getMinutes());
-    return `${yyyy}-${MM}-${dd}T${hh}:${mm}`;
+    return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
+
 
   
 
@@ -172,6 +175,7 @@ export class CrudFormComponent implements OnInit {
     // Convert local time to ISO string (UTC)
     const instantFormat = new Date(formDateFormat).toISOString();
 
+    
   
     
     //if(!this.)
