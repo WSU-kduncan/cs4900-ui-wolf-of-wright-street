@@ -1,0 +1,19 @@
+.budget { padding: 1rem; }
+.summary { margin: .25rem 0 .75rem; }
+.over { color: #b00020; font-weight: 600; margin-left: .5rem; }
+.ok { color: #006400; font-weight: 600; margin-left: .5rem; }
+
+.chart { max-width: 560px; }
+
+.items {
+  list-style: none; margin: 1rem 0 0; padding: 0;
+}
+.item {
+  border: 1px solid #ddd; border-radius: .5rem;
+  padding: .5rem .75rem; margin-bottom: .5rem;
+  display: grid; grid-template-columns: 1fr auto auto; gap: .75rem; align-items: center;
+}
+.item .name { font-weight: 600; }
+.item .amt { justify-self: end; }
+.item .pct { width: 3.5rem; text-align: right; color: #555; }
+.item.muted { color: #666; font-style: italic; }

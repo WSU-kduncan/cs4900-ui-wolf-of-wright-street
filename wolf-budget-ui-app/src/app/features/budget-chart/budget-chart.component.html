@@ -1,0 +1,37 @@
+<section class="budget">
+  @if (categories().length > 0) {
+    <h2>Budget Allocation</h2>
+    <p class="summary">
+      Budget: ${{ budget() }} · Used: ${{ used() }}
+      @if (over() > 0) { <span class="over">Over by ${{ over() }}</span> }
+      @if (remaining() > 0) { <span class="ok">Remaining ${{ remaining() }}</span> }
+    </p>
+  }
+
+  <div class="chart">
+    <canvas
+      baseChart
+      [data]="pieConfig().data"
+      [type]="pieConfig().type"
+      [options]="pieConfig().options">
+    </canvas>
+  </div>
+
+  <h3>Transactions</h3>
+
+  <button (click)="goToNew()">New Transaction</button>
+
+  <ul class="items">
+    @for (tx of transactions(); track tx.id) {
+      <li class="item">
+        <span class="name">{{ tx.name }}</span>
+        <span class="amt">{{ tx.amount }}</span>
+
+        <button (click)="edit(tx.id)">Edit</button>
+        <button (click)="onDelete(tx.id)">Delete</button>
+      </li>
+    } @empty {
+      <li class="item muted">No transactions loaded.</li>
+    }
+  </ul>
+</section>
