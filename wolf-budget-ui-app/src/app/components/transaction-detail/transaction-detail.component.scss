@@ -106,7 +106,7 @@ a:hover,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: --radius-pill;
+  border-radius: 20px;
   padding: 0.75rem 2.75rem;
   font-family: "Inter", system-ui, sans-serif;
   font-size: 16px;
@@ -123,6 +123,7 @@ a:hover,
   color: #ffffff;
   border-color:   #3B7A57;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
 }
 
 .btn-primary:hover {
@@ -140,6 +141,7 @@ a:hover,
   background-color: transparent;
   color:   #3C9D9B;
   border-color:   #3C9D9B;
+  border-radius: 20px;
 }
 
 .btn-secondary:hover {
