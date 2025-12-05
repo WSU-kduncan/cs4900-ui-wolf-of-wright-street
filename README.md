@@ -1,7 +1,7 @@
 # Wolf of Wright Street - UI Group Repository
 This is the UI repository for the Transaction Tracker project. 
 - Our main repository can be found [here](https://github.com/WSU-kduncan/cs4900-wolf-of-wright-street).
-- Our API repository can be found [here](https://github.com/WSU-kduncan/cs4900-api-wolf-of-wright-street)
+- Our API repository can be found [here](https://github.com/WSU-kduncan/cs4900-api-wolf-of-wright-street).
 ### Group Members
 - Kyle Cox
 - Daniel Cronauer
@@ -29,8 +29,7 @@ To run the UI portion of this project, the following tools are required:
 ### Other Repositories
 This application can be run in a standalone fashion, but nothing related to database/API connections will function properly. The following steps must be done before attempting to compile this project if actual interaction with the database wants to be obtained:
 1. Running Docker container for the DBeaver database - clone the main repository, run `docker compose up` within [this folder](https://github.com/WSU-kduncan/cs4900-wolf-of-wright-street/tree/main/DATABASE/DBeaver_Docker_Integration) locally. (instructions included at this link)
-2. Clone the [API Repository](https://github.com/WSU-kduncan/cs4900-api-wolf-of-wright-street) separately, and run `./gradlew bootRun` in the newly created folder. Verify that the API runs correctly and throws no errors in the console log.
-  - *Make sure the Docker container is running before you do this - otherwise, it WILL NOT start!*
+2. Clone the [API Repository](https://github.com/WSU-kduncan/cs4900-api-wolf-of-wright-street) separately, and run `./gradlew bootRun` in the newly created folder. Verify that the API runs correctly and throws no errors in the console log. *Make sure the Docker container is running before you do this - otherwise, it WILL NOT start!*
 
 ### Compiling UI
 Follow these steps in order to run the UI:
